@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce d'or commémorative BFM - {% block title %}{% endblock %}</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        {# <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"> #}
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/dataTables.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/searchPanes.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/fixedColumns.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/select.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/buttons.dataTables.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+
+        <!-- calendar CSS Files -->
+        <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrapCalendar.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarAll.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarMain.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarDaygrid.main.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/livraisonSiege.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
+        {% block stylesheets %}
+        {% endblock %}
+
+    </head>
+
+    <body>
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <header id="header" class="header fixed-top d-flex align-items-center">
+
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="{{ path('admin_app_order_index') }}" class="logo d-flex align-items-center">
+                    <img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" class="img-fluid" alt="BFM">
+                    <span class="d-none d-lg-block">BFM</span>
+                </a>
+                <i class="bi bi-list toggle-sidebar-btn"></i>
+            </div><!-- End Logo -->
+
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+
+                    <li class="nav-item dropdown pe-3">
+
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">{{ app.user.name }}</span>
+                        </a><!-- End Profile Image Icon -->
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile pt-0">
+
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ path('admin_logout', {'token': csrf_token('logout')}) }}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Déconnexion</span>
+                                </a>
+                            </li>
+
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li><!-- End Profile Nav -->
+
+                </ul>
+            </nav><!-- End Icons Navigation -->
+
+        </header><!-- End Header -->
+
+        <aside id="sidebar" class="sidebar">
+
+            <ul class="sidebar-nav" id="sidebar-nav">
+                {% if app.user.hasMenu(2) or app.user.hasMenu(3) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-person"></i><span>Utilisateurs</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% if app.user.hasMenu(2) %}
+                        <li>
+                            <a href="{{ path('admin_group_index') }}">
+                                <i class="bi bi-circle"></i><span>Groupes</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(3) %}
+                        <li>
+                            <a href="{{ path('admin_user_index') }}">
+                                <i class="bi bi-circle"></i><span>Utilisateurs</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if app.user.hasMenu(5) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#or-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-currency-exchange"></i><span>Or</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="or-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ path('app_or_stock_index_back') }}">
+                                <i class="bi bi-circle"></i><span>Liste</span>
+                            </a>
+                        </li>
+{#                        <li>#}
+{#                            <a href="{{ path('app_or_stock_new_back') }}">#}
+{#                            <i class="bi bi-circle"></i><span>Ajout</span>#}
+{#                            </a>#}
+{#                        </li>#}
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% if app.user.hasMenu(7) or app.user.hasMenu(8) or app.user.hasMenu(9) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#preorder-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-person-circle"></i><span>Précommandes</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="preorder-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% if app.user.hasMenu(7) %}
+                        <li>
+                            <a href="{{ path('admin_app_order_index') }}">
+                                <i class="bi bi-circle"></i><span>Acceptées</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(8) %}
+                        <li>
+                            <a href="{{ path('admin_app_order_filter_cancel') }}">
+                                <i class="bi bi-circle"></i><span>Rejetées</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {# {% if app.user.hasMenu(9) %}
+                        <li>
+                            <a href="{{ path('admin_app_order_queue') }}">
+                                <i class="bi bi-circle"></i><span>Liste d'attente</span>
+                            </a>
+                        </li>
+                        {% endif %} #}
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% if app.user.hasMenu(11) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#payment-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-check-all"></i><span>Paiement</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="payment-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ path('admin_payment_check') }}">
+                                <i class="bi bi-circle"></i><span>Par chèque</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                    
+                {% if app.user.hasMenu(13) or app.user.hasMenu(14) or app.user.hasMenu(15) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#rappro-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-file-check"></i><span>Rapprochement</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="rappro-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% if app.user.hasMenu(13) %}
+                        <li>
+                            <a href="{{ path('admin_rapprochement_check') }}">
+                                <i class="bi bi-circle"></i><span>Par chèque</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(14) %}
+                        <li>
+                            <a href="{{ path('admin_rapprochement_transfer') }}">
+                                <i class="bi bi-circle"></i><span>Par virement</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(15) %}
+                        <li>
+                            <a href="{{ path('admin_rapprochement_loan') }}">
+                                <i class="bi bi-circle"></i><span>Par virement (PPEX)</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if app.user.hasMenu(17) or app.user.hasMenu(18) or app.user.hasMenu(19) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#livraison-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-cart-check"></i><span>Livraison</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="livraison-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% if app.user.hasMenu(17) %}
+                        <li>
+                            <a href="{{ path('admin_livraison_depot_index') }}">
+                                <i class="bi bi-circle"></i><span>Dépot BFM</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(18) %}
+                        <li>
+                            <a href="{{ path('admin_livraison_siege_index') }}">
+                                <i class="bi bi-circle"></i><span>Récupération siège</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(19) %}
+                        <li>
+                            <a href="{{ path('admin_livraison_rt_index') }}">
+                                <i class="bi bi-circle"></i><span>Récupération RT</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if app.user.hasMenu(21) or app.user.hasMenu(22) %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#param-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-gear"></i><span>Paramètres</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="param-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% if app.user.hasMenu(21) %}
+                        <li>
+                            <a href="{{ path('admin_setting_index') }}">
+                                <i class="bi bi-circle"></i><span>Liste des paramètres</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_setting_nationality') }}">
+                                <i class="bi bi-circle"></i><span>Nationalité</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_setting_campaign') }}">
+                                <i class="bi bi-circle"></i><span>Date de fin de campagne</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_setting_cgv') }}">
+                                <i class="bi bi-circle"></i><span>CGV</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_setting_faq') }}">
+                                <i class="bi bi-circle"></i><span>FAQ</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if app.user.hasMenu(22) %}
+                        <li>
+                            <a href="{{ path('admin_app_pays_index') }}">
+                                <i class="bi bi-circle"></i><span>Liste des pays</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {{ render(controller('App\\Controller\\SecurityController::stock')) }}
+            
+            </ul>
+
+        </aside><!-- End Sidebar-->
+
+        <main id="main" class="main">
+
+            {% block body %}{% endblock %}
+
+        </main><!-- End main -->
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('Notiflix-2.7.0/dist/notiflix-aio-2.7.0.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.fixedColumns.js') }}"></script>
+        <script src="{{ asset('js/datatables/fixedColumns.dataTables.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.searchPanes.js') }}"></script>
+        <script src="{{ asset('js/datatables/searchPanes.dataTables.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.select.js') }}"></script>
+        <script src="{{ asset('js/datatables/select.dataTables.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.buttons.js') }}"></script>
+        <script src="{{ asset('js/datatables/buttons.dataTables.js') }}"></script>
+        <script src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
+        <script src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+
+        {% block javascripts_vendor %}
+        {% endblock %}
+
+        <!-- Template Main JS File -->
+        <script src="{{ asset('js/admin.js') }}"></script>
+        <script src="{{ asset('js/alert.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#group_users, #group_menus').select2({
+                    width: 'resolve' // need to override the changed default
+                });
+
+                let orLimite = $('#attribution').data('max-selection');
+
+                $("#attribution").select2({
+                    maximumSelectionLength: orLimite,
+                    placeholder: 'Choisir un ou plusieurs pièces'
+                });
+
+                {% for message in app.flashes('success') %}
+                    flashAlert('success', '{{ message }}');
+                {% endfor %}
+
+                {% for message in app.flashes('error') %}
+                    flashAlert('error', '{{ message }}');
+                {% endfor %}
+            });
+
+
+
+            new DataTable($('.datatable-export'), {
+                columnDefs: [
+                    {
+                        visible: false,
+                        targets: [2, 3]
+                    }
+                ],
+                layout: {
+                    top1: {
+                        searchPanes: {
+                            threshold: 1,
+                            columns: '.searchPane'
+                        }
+                    },
+                    topStart: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: 'Export to excel',
+                                exportOptions: {
+                                    columns: '.export'
+                                }
+                            },
+                            'pageLength',
+                        ]
+                    }
+                },
+                paging: true
+            });
+        </script>
+
+        {% block javascripts %}
+        {% endblock %}
+
+    </body>
+
+</html>

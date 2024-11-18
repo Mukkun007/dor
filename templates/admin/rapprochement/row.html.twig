@@ -1,0 +1,39 @@
+<tr{% if ((rappro.typeRappro == 'V' or rappro.typeRappro == 'P') and user is null) or (rappro.typeRappro == 'C' and rappro.statutChqVir == 'R') %} class="bg-danger text-white"{% endif %}>
+    {% if rappro.typeRappro == 'V' or rappro.typeRappro == 'P' %}
+        <td>{{ rappro.reference }}</td>
+        <td>{{ rappro.numDossier }}</td>
+        <td>{{ rappro.nom }}</td>
+        <td>{{ rappro.prenom }}</td>
+        <td>{{ rappro.nom }} {{ rappro.prenom }}</td>
+        <td>{{ rappro.statutChqVir == 'T' ? 'Accepté' : (rappro.statutChqVir == 'N' ? 'Reçu' : 'Rejet') }}</td>
+        <td>{{ rappro.dateRappro }}</td>
+        <td>{{ (rappro.statutRappro is null or rappro.statutRappro is empty or rappro.statutRappro == 2) ? 'En attente de traitement' : (rappro.statutRappro == 1 ? 'Vérifié' : 'Annulé') }}</td>
+        <td>{{ rappro.dateTraitement }}</td>
+    {% elseif rappro.typeRappro == 'C' %}
+        <td>{{ rappro.reference }}</td>
+        <td>{{ rappro.numDossier is not null and user is not null and user.preorder is not null ? user.preorder.dateOv : '' }}</td>
+        <td>{{ rappro.nom }}</td>
+        <td>{{ rappro.prenom }}</td>
+        <td>{{ rappro.numDossier }}</td>
+        <td>{{ rappro.statutChqVir == 'T' ? 'Accepté' : (rappro.statutChqVir == 'N' ? 'Reçu' : 'Rejet') }}</td>
+        <td>{{ rappro.dateRappro }}</td>
+        <td>{{ (rappro.statutRappro is null or rappro.statutRappro is empty or rappro.statutRappro == 2) ? 'En cours de traitement' : (rappro.statutRappro == 1 ? 'Vérifié' : 'Annulé') }}</td>
+        <td>{{ rappro.dateTraitement }}</td>
+    {% endif %}
+    <td>
+        <div class="d-flex justify-content-end text-right">
+            {% if rappro.statutRappro == 1 %}
+                <form method="post" action="{{ path('admin_rapprochement_send_mail', {'id': rappro.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir réenvoyer le mail de confirmation ?');">
+                    <button class="btn btn-primary me-2">Réenvoyer le mail de confirmation</button>
+                </form>
+            {% endif %}
+            {% if rappro.typeRappro == 'C' %}
+                <a href="{{ path('admin_rapprochement_check_edit', {'id': rappro.id}) }}" class="btn btn-sm btn-success d-flex align-items-center">Détails</a>
+            {% elseif rappro.typeRappro == 'V' %}
+                <a href="{{ path('admin_rapprochement_transfer_edit', {'id': rappro.id}) }}" class="btn btn-sm btn-success d-flex align-items-center">Détails</a>
+            {% elseif rappro.typeRappro == 'P' %}
+                <a href="{{ path('admin_rapprochement_loan_edit', {'id': rappro.id}) }}" class="btn btn-sm btn-success d-flex align-items-center">Détails</a>
+            {% endif %}
+        </div>
+    </td>
+</tr>

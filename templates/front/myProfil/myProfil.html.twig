@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce de monnaie en or commémorative de 50 Ariary - Précommander</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+
+    </head>
+
+    <body  class="d-flex flex-column h-100" style="background-color: #004776;">
+        
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main p-5">
+            
+            <div class="container">
+
+                <div class="row mb-5 ">
+                    <div class="col-12 d-flex align-items-center justify-content-between mb-3 p-0">
+                      
+                        <div class="header-signup ">
+                            <div class="myProfil-wrapper-logo">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/Face.png') }}" alt="BFM" class="myProfil-logo"></a>
+                            </div>
+                        </div>
+                        <div class="wrapper-title m-auto d-none d-md-block">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold  text-uppercase">
+                                        <h3 class="title_signup">pièces de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold  text-uppercase">
+                                        <h3 class="title_signup">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="nav-item dropdown navMdp">
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-3" ></i>
+                                {# <span class="d-none d-md-block dropdown-toggle ps-2" style="color:#004776;">{{ app.user.name }}</span> #}
+                            </a><!-- End Profile Image Icon -->
+
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile  py-3 ">
+                                
+                                <li class="dashboardMenu">
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ path( 'dashboard_index') }}">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Suivre ma commande</span>
+                                    </a>
+                                </li>
+                                <li class="dashboardMenu">
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ path( 'update_user') }}">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Informations personnelles</span>
+                                    </a>
+                                </li>
+                                <li class="dashboardMenu">
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ path( 'user_mdp') }}">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Modification du mot de passe</span>
+                                    </a>
+                                </li>
+                                
+
+                            </ul><!-- End Profile Dropdown Items -->
+                        </div>
+                        <a href="{{ path('app_logout', {'token': csrf_token('logout')}) }}"><i class="bi bi-power" style=" font-size: 40px;"></i></a>
+                    </div>
+                    <div class="wrapper-title text-center d-block d-md-none title-min-width">
+                        <div class="row mx-auto">
+                            <div class="col-12 text-gold  text-uppercase">
+                                <h3 class="title_signup m-0">pièces de monnaie en or commémorative de 50 Ariary</h3>
+                            </div>
+                        </div>
+                        <div class="row my-auto">
+                            <div class="col-12 text-gold  text-uppercase">
+                                <h3 class="title_signup">banky foiben'i madagasikara</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                {{ include('front/myProfil/details.html.twig') }}
+            </div>
+
+            <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+            <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+            <script src="{{ asset('js/additional-methods.min.js') }}"></script>
+            <script src="{{ asset('js/localization/messages_fr.min.js') }}"></script>
+            <script src="{{ asset('js/bankyInfo.js') }}"></script>
+            <script src="{{ asset('js/alert.js') }}"></script>
+            <script src="{{ asset('js/platform.min.js') }}"></script>
+            <script src="{{ asset('js/profile.js') }}"></script>
+            <script src="{{ asset('js/signup.js') }}"></script>
+            <script>
+                $(document).ready(function () {
+                    {% for message in app.flashes('error') %}
+                        modalAlert('{{ message }}', 'error');
+                    {% endfor %}
+                });
+            </script>
+            <script>
+                window.onload = () => {
+                    let hasCIN = '{{ app.user.cin }}';
+                    let userAccountType = '{{ account }}';
+
+                    let rib_Value_ = getRibValue();
+                    displayBankInfo(rib_Value_);
+
+                    // Si l'utilisateur a un CIN, afficher le div CIN et cacher le div passport, sinon, faire l'inverse
+                    if (hasCIN !== '') {
+                        $('.cin').removeClass('d-none');
+                        $('.passport').addClass('d-none');
+                        $('.passportExp').addClass('d-none');
+                    } else {
+                        $('.cin').addClass('d-none');
+                        $('.passport').removeClass('d-none');
+                        $('.passportExp').removeClass('d-none');
+                    }
+
+                    if (userAccountType === 'Banque locale') {
+                        $('.rib').removeClass('d-none');
+                        $('.ribFile').removeClass('d-none');
+                        $('.affiliation').addClass('d-none');
+                        $('.affiliationFile').addClass('d-none');
+                        $('.iban').addClass('d-none');
+                        $('.ibanFile').addClass('d-none');
+                        $('.swift').addClass('d-none');
+                    } else if (userAccountType === 'IMF') {
+                        $('.rib').addClass('d-none');
+                        $('.ribFile').addClass('d-none');
+                        $('.affiliation').removeClass('d-none');
+                        $('.affiliationFile').removeClass('d-none');
+                        $('.iban').addClass('d-none');
+                        $('.ibanFile').addClass('d-none');
+                        $('.swift').addClass('d-none');
+                    } else if (userAccountType === "Banque extérieure") {
+                        $('.rib').addClass('d-none');
+                        $('.ribFile').addClass('d-none');
+                        $('.affiliation').addClass('d-none');
+                        $('.affiliationFile').addClass('d-none');
+                        $('.iban').removeClass('d-none');
+                        $('.ibanFile').removeClass('d-none');
+                        $('.swift').removeClass('d-none');
+                    }
+                    // Ajouter un gestionnaire d'événements au menu déroulant du compte pour détecter les changements
+                    // Ajouter un gestionnaire d'événements au menu déroulant du compte pour détecter les changements
+                    document.getElementById('user_account').addEventListener('change', function() {
+                        // Récupérer la valeur sélectionnée dans le menu déroulant
+                        const account= document.getElementById('user_account').value;
+
+                        // Afficher les champs en fonction du type de compte sélectionné
+                        if (account == 1) {
+                            $('.rib').removeClass('d-none');
+                            $('.ribFile').removeClass('d-none');
+                            $('.affiliation').addClass('d-none');
+                            $('.affiliationFile').addClass('d-none');
+                            $('.iban').addClass('d-none');
+                            $('.ibanFile').addClass('d-none');
+                            $('.swift').addClass('d-none');
+                        } else if (account == 2) {
+                            $('.rib').addClass('d-none');
+                            $('.ribFile').addClass('d-none');
+                            $('.affiliation').removeClass('d-none');
+                            $('.affiliationFile').removeClass('d-none');
+                            $('.iban').addClass('d-none');
+                            $('.ibanFile').addClass('d-none');
+                            $('.swift').addClass('d-none');
+                        } else if (account == 3) {
+                            $('.rib').addClass('d-none');
+                            $('.ribFile').addClass('d-none');
+                            $('.affiliation').addClass('d-none');
+                            $('.affiliationFile').addClass('d-none');
+                            $('.iban').removeClass('d-none');
+                            $('.ibanFile').removeClass('d-none');
+                            $('.swift').removeClass('d-none');
+                        }
+                    });
+                };
+            </script>
+
+        </main>
+
+        {{ include('front/_footer.html.twig') }}
+
+    </body>
+
+</html>

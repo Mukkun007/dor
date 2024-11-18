@@ -1,0 +1,301 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Précommandes{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Référence n° {{ order.reference }}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_app_order_index') }}">Précommandes</a></li>
+                <li class="breadcrumb-item active">{{ order.reference }}</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="d-inline-flex mb-4">
+        {% if order.flagStatus != 2 and order.flagStatus != 99 %}
+            <a href="{{ path('admin_app_order_index') }}" class="btn btn-sm btn-secondary me-2">Retour à la liste</a>
+        {% elseif order.flagStatus == 99 %}
+            <a href="{{ path('admin_app_order_filter_cancel') }}" class="btn btn-sm btn-secondary me-2">Retour à la liste</a>
+        {% elseif order.flagStatus == 2 %}
+            <a href="{{ path('admin_app_order_queue') }}" class="btn btn-sm btn-secondary me-2">Retour à la liste</a>
+        {% endif %}
+    </div>
+
+    <section class="section">
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h1 class="card-title mb-0 pb-0 text-muted">Précommande</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>N° Précommande</th>
+                                    <td class="text-right">{{ order.reference }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date inscription</th>
+                                    <td class="text-right">{{ order.user.createdAt|date('d/m/Y H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nombre de pièce commandé</th>
+                                    <td class="text-right">{{ order.user.orQuantity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Etat de la précommande</th>
+                                    <td class="text-right">{{ etat[order.flagStatus] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Utilisateur</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Civilité</th>
+                                    <td class="text-right">{{ civility[order.user.civility] }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Situation familiale</th>
+                                    <td class="text-right">{{ marital[order.user.maritalStatus] }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom & prénom</th>
+                                    <td class="text-right">{{ order.user.name }} {{ order.user.firstname }}</td>
+                                </tr>
+                                {% if order.user.passport != null and order.user.passportExp != null %}
+                                    <tr>
+                                        <th>Passeport (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 2}) }}" target="_blank">Télécharger</a>)</th>
+                                        <td class="text-right">{{ order.user.passport }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date d'expiration</th>
+                                        <td class="text-right">{{ order.user.passportExp }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pays</th>
+                                        <td class="text-right">{{ order.user.country is not null ? order.user.country.libelle : 'Madagascar' }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.user.passport == null and order.user.passportExp == null %}
+                                    <tr>
+                                        <th>CIN (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 1}) }}" target="_blank">Télécharger</a>)</th>
+                                        <td class="text-right">{{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}</td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th>Date de naissance</th>
+                                    <td class="text-right">{{ order.user.birthday }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Adresse</th>
+                                    <td class="text-right">{{ order.user.address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ville</th>
+                                    <td class="text-right">{{ order.user.city }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td class="text-right">{{ order.user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Numéro de téléphone</th>
+                                    <td class="text-right">{{ order.user.phone|slice(0, 3) }} {{ order.user.phone|slice(3, 2) }} {{ order.user.phone|slice(5, 3) }} {{ order.user.phone|slice(8, 2) }}</td>
+                                </tr>
+                                {% if order.user.rib != null %}
+                                    <tr>
+                                        <th>RIB (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 3}) }}" target="_blank">Télécharger</a>)</th>
+                                        <td class="text-right">{{ order.user.rib|slice(0, 5) }} {{ order.user.rib|slice(5, 5) }} {{ order.user.rib|slice(10, 11) }} {{ order.user.rib|slice(21, 2) }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.user.affiliation != null %}
+                                    <tr>
+                                        <th>Numéro d'affiliation (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 4}) }}" target="_blank">Télécharger</a>)</th>
+                                        <td class="text-right">{{ order.user.affiliation }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.user.iban != null %}
+                                    <tr>
+                                        <th>IBAN - SWIFT (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 5}) }}" target="_blank">Télécharger</a>)</th>
+                                        <td class="text-right">{{ order.user.iban }} - {{ order.user.swift }}</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Paiement</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Mode de paiement</th>
+                                    <td class="text-right">{{ payment[order.user.paymentMethod] }}</td>
+                                </tr>
+                                {% if order.flagStatus >= 3 and order.flagStatus != 99 and order.choiceLivraison is not null %}
+                                    {% if order.user.paymentMethod == 1 %}
+                                        <tr>
+                                            <th>N° OV (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 6}) }}" target="_blank">Télécharger</a>)</th>
+                                            <td class="text-right">{{ order.ov }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <th>N° chèque</th>
+                                            <td class="text-right">{{ order.cheque_number }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                                {% if order.datePaiement is not null and order.datePaiement is not empty %}
+                                    <tr>
+                                        <th>Date paiement</th>
+                                        <td class="text-right">{{ order.datePaiement|date('d/m/Y H:i:s') }}</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        {% if order.flagStatus >= 3 and order.flagStatus != 99 and order.choiceLivraison is not null %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Livraison</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Mode de livraison</th>
+                                        <td class="text-right">{{ livraison[order.choiceLivraison] }}</td>
+                                    </tr>
+                                    {% if order.choiceLivraison > 1 %}
+                                        <tr>
+                                            <th>Lieu de récupération choisi</th>
+                                            <td class="text-right">{{ order.userRt is not null and order.userRt is not empty ? rt[order.userRt] : meeting[order.choiceMeeting] }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if order.flagStatus >= 5 and order.dateCalendar is not null %}
+                                        <tr>
+                                            <th>Date de récupération choisie</th>
+                                            <td class="text-right">{{ order.dateCalendar|date('d/m/Y') }} {{ order.typeCalendar == 'AM' ? 'de 09h00 à 11h30' : (order.typeCalendar == 'PM' ? 'de 14h00 à 16h30' : '') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                            {% if order.choiceLivraison == 3 %}
+                                <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Mandataire</h1>
+                                <table class="table m-0">
+                                    <tbody>
+                                        <tr>
+                                            <th>OTP</th>
+                                            <td class="text-right">{{ order.otp }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nom & prénom</th>
+                                            <td class="text-right">{% if order.tierceCivility is not empty %}{{ civility[order.tierceCivility] }} {% endif %}{{ order.nameTierce }} {{ order.firstnameTierce }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date de naissance</th>
+                                            <td class="text-right">{{ order.tierceBirthday }} à {{ order.tierceAddress }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CIN</th>
+                                            <td class="text-right">{{ order.cinTierce|slice(0, 3) }} {{ order.cinTierce|slice(3, 3) }} {{ order.cinTierce|slice(6, 3) }} {{ order.cinTierce|slice(9, 3) }}</td>
+                                        </tr>
+                                        {% if order.tierceDuplicata is not null and order.tierceDuplicata is not empty %}
+                                            <tr>
+                                                <th>Duplicata du</th>
+                                                <td class="text-right">{{ order.tierceDuplicata }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <th>Téléphone</th>
+                                            <td class="text-right">{{ order.tiercePhone }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        {% endif %}
+                        {% if order.flagStatus == 6 %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Pièce</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                <tr>
+                                    <th>Référence</th>
+                                    <td class="text-right">{{ order.orStock.ref }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date d'attribution</th>
+                                    <td class="text-right">{{ order.dateLivraison|date('d/m/Y') }}</td>
+                                </tr>
+                            </table>
+                        {% endif %}
+                        <div class="d-flex justify-content-between pt-4">
+{#                            <form class="me-2" method="post" action="{{ path('admin_app_order_validate', {'id': order.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir valider ?');">#}
+{#                                {{ order.flagStatus == 1 ? "<button class=\"btn btn-primary\" disabled>Valider</button>" : (order.flagStatus == 3 ? "<button class=\"btn btn-primary\" disabled>Valider</button>" : "<button class=\"btn btn-primary\">Valider</button>") }}#}
+{#                            </form>#}
+{#                            <form method="post" action="{{ path('admin_app_order_cancel', {'id': order.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir annuler ?');">#}
+{#                                {{ order.flagStatus == 3 ? "<button class=\"btn btn-danger\" disabled>Annuler</button>" : "<button class=\"btn btn-danger\">Annuler</button>" }}#}
+{#                            </form>#}
+                            {% if order.flagStatus < 4 %}
+                                <form method="post" action="{{ path('admin_app_order_cancel', {'id': order.id, 'type': 1}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir rejeter définitivement cette précommande ?');">
+                                    <button class="btn btn-danger">Rejeter</button>
+                                </form>
+                                <form method="post" action="{{ path('admin_app_order_cancel', {'id': order.id, 'type': 2}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir rejeter cette précommande pour cause de CIN invalide ?');">
+                                    <button class="btn btn-warning">Rejeter (CIN invalide)</button>
+                                </form>
+                            {% endif %}
+                            {% if order.flagStatus < 3 %}
+                                <form method="post" action="{{ path('admin_app_order_validate', {'id': order.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir valider cette précommande ?');">
+                                    <button class="btn btn-primary">Valider</button>
+                                </form>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') and order.flagStatus == 99 %}
+                                <form method="post" action="{{ path('admin_app_order_revalidate', {'id': order.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir repêcher cette précommande ?');">
+                                    <button class="btn btn-primary">Repêcher</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-5">
+                        {% if order.user.passport != null and order.user.passportExp != null %}
+                            <h1 class="card-title my-0 py-0 text-muted">Passeport</h1>
+                            <embed src="{{ order.user.filePassport|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        {% endif %}
+                        {% if order.user.passport == null and order.user.passportExp == null %}
+                            <h1 class="card-title my-0 py-0 text-muted">CIN</h1>
+                            <embed src="{{ order.user.fileCin|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body p-5">
+                        {% if order.user.rib != null %}
+                            <h1 class="card-title my-0 py-0 text-muted">RIB</h1>
+                            <embed src="{{ order.user.fileRib|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        {% endif %}
+                        {% if order.user.affiliation != null %}
+                            <h1 class="card-title my-0 py-0 text-muted">Numéro d'affiliation</h1>
+                            <embed src="{{ order.user.fileAffiliation|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        {% endif %}
+                        {% if order.user.iban != null %}
+                            <h1 class="card-title my-0 py-0 text-muted">IBAN-SWIFT</h1>
+                            <embed src="{{ order.user.fileIban|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if order.flagStatus >= 3 and order.flagStatus != 99 and order.user.paymentMethod == 1 %}
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <h1 class="card-title my-0 py-0 text-muted">OV</h1>
+                            <embed src="{{ order.fileOv|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

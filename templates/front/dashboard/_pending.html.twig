@@ -1,0 +1,22 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-5">
+                {# <h3 class="text-dark-gold mb-5">Suivi précommande</h3>
+
+                <ul class="progressbar">
+                    <li class="text-center step1 active"><h5 class="fw-bold mt-4">Traitement par BFM</h5></li>
+                    <li class="text-center step2"><h5 class="fw-bold mt-4">Paiement</h5></li>
+                    <li class="text-center step3"><h5 class="fw-bold mt-4">Mode de livraison</h5></li>
+                    <li class="text-center step4"><h5 class="fw-bold mt-4">Livraison</h5></li>
+                </ul> #}
+                {% if app.user.preorder.flagStatus == 99 or app.user.preorder.flagStatus == 399 %}
+                    <h5 class="text-blue mt-5">Votre inscription a été rejetée.</h5>
+                {% else %}
+                    <h5 class="text-blue mt-5">Votre précommande est en cours de traitement auprès de BFM.</h5>
+                    <h5 class="text-blue">Un mail de notification vous sera envoyé par la suite.</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

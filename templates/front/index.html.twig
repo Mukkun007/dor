@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce de monnaie en or commémorative de 50 Ariary</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+        
+    </head>
+
+    <body>
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main-index">
+
+{#            <div id="test" class="row">#}
+{#                <div class="col-12">#}
+{#                    <h1 class="text-center m-auto p-2">VERSION TEST</h1>#}
+{#                </div>#}
+{#            </div>#}
+
+            <div class="row">
+                <div class="col-lg-6 pt-3">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="wrapper-logo mt-5">
+                            <img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="logo" >
+                        </div>
+
+                        <div class="wrapper-info my-5 mt-0">
+                            <h3 class="mb-4 text-center p-2">Bienvenue sur le site d'inscription pour la commande de :</h3>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 text-light-gold text-center">
+                                            <h1 class="m-0 index-h1">Pièce de monnaie en or</h1>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-12 text-light-gold text-center">
+                                            <h1 class="index-h1">commémorative de 50 Ariary</h1>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-12 text-end">
+                                            <a href="{{ path('app_more') }}" class="text-white"><h4>En savoir plus <i class="bi bi-arrow-right"></i></h4></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if campaign is same as(true) %}
+                                <div class="d-flex justify-content-between mt-1">
+                                    <a href="{{ path('app_signup') }}" class="btn btn-preorder ">Inscription</a>
+                                    <a href="{{ path('app_login') }}" class="btn btn-dashboard ms-5">Suivre ma commande</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 p-0 right-index">
+                    <img src="{{ asset('img/IMG_7316.png') }}" alt="BFM" >
+                </div>
+            </div>
+
+        </main><!-- End main -->
+
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/alert.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+                {% for message in app.flashes('success') %}
+                    modalAlert('{{ message }}', 'success');
+                {% endfor %}
+
+                {% for message in app.flashes('error') %}
+                    modalAlert('{{ message }}', 'error');
+                {% endfor %}
+            });
+        </script>
+
+    </body>
+
+</html>

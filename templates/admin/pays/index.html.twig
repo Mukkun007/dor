@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Pays{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Pays</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Liste</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="d-inline-flex mb-4">
+        <a href="{{ path('admin_app_pays_new') }}" class="btn btn-sm btn-secondary me-2">Ajout</a>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Libelle</th>
+                                    <th>Code</th>
+                                    <th>Date d'insertion</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pay in pays %}
+                                    <tr>
+                                        <td>{{ pay.id }}</td>
+                                        <td>{{ pay.libelle }}</td>
+                                        <td>{{ pay.code }}</td>
+                                        <td>{{ pay.dateInsert is not null ? pay.dateInsert|date('Y-m-d') : '' }}</td>
+                                        <td class="text-right">
+                                            <a href="{{ path('admin_app_pays_edit', {'id': pay.id}) }}" class="btn btn-sm btn-secondary">Editer</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

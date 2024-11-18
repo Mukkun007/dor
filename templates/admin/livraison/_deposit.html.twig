@@ -1,0 +1,256 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Livraison{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Livraison</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_livraison_depot_index') }}">Livraison</a></li>
+                <li class="breadcrumb-item active">Dépot BFM</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body container">
+                        <h1 class="card-title mb-0 pb-0 text-muted">Précommande</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>N° Précommande</th>
+                                    <td class="text-right">{{ order.reference }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date inscription</th>
+                                    <td class="text-right">{{ order.user.createdAt|date('d/m/Y H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date paiement</th>
+                                    <td class="text-right">{{ order.datePaiement|date('d/m/Y H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nombre de pièce commandé</th>
+                                    <td class="text-right">{{ order.user.orQuantity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Statut de la précommande</th>
+                                    <td class="text-right">{{ status[order.flagStatus] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Utilisateur</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Civilité</th>
+                                    <td class="text-right">{{ civility[order.user.civility] }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom & prénom</th>
+                                    <td class="text-right">{{ order.user.name }} {{ order.user.firstname }}</td>
+                                </tr>
+                                {% if order.user.passport != null and order.user.passportExp != null %}
+                                    <tr>
+                                        <th>Passeport</th>
+                                        <td class="text-right">{{ order.user.passport }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date d'expiration</th>
+                                        <td class="text-right">{{ order.user.passportExp }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pays</th>
+                                        <td class="text-right">{{ order.user.country is not null ? order.user.country.libelle : 'Madagascar' }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.user.passport == null and order.user.passportExp == null %}
+                                    <tr>
+                                        <th>CIN</th>
+                                        <td class="text-right">{{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        {% if order.flagStatus > 4 and order.flagStatus < 30 %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Dépôt</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Date de signature choisie</th>
+                                        <td class="text-right">{{ order.dateCalendar|date('d/m/Y') }} {{ order.typeCalendar == 'AM' ? 'de 09h00 à 11h30' : (order.typeCalendar == 'PM' ? 'de 14h00 à 16h30' : '') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        {% if order.flagStatus == 6 %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Pièce</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Référence</th>
+                                        <td>
+                                            <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                                {% for o in orStockOrder %}
+                                                    <span class="border px-2">{{ o.ref }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date d'attribution</th>
+                                        <td class="text-right">{{ order.dateLivraison|date('d/m/Y') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test code -->
+             {% if order.flagStatus > 4 and order.flagStatus < 30 %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body container">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h1 class="card-title mb-0 pb-0 text-muted">Livraison</h1>
+                                <div class="mb-3">
+                                    {% if order.flagStatus == 6 %}
+                                        <button type="button" class="btn d-block rounded-pill mt-2" onclick="divToPrintBill();">
+                                            <span>
+                                                <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                                </svg>
+                                            </span>
+                                            Imprimer la facture
+                                        </button>
+                                        <button type="button" class="btn d-block rounded-pill mt-2" onclick="divToPrintContratDepot();">
+                                            <span>
+                                                <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                                </svg>
+                                            </span>
+                                            Imprimer le contrat de dépot
+                                        </button>
+                                        <button type="button" class="btn d-block rounded-pill mt-2" onclick="divToPrintAttestationDepot();">
+                                            <span>
+                                                <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                                </svg>
+                                            </span>
+                                            Imprimer l'attestation de dépot
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if order.flagStatus == 5 %}
+                                <form name="order" method="post" class="form-group row mb-0 pb-0">
+                                    <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                        <div class="d-flex">
+                                            <label for="attribution" class="form-label">Pièce :</label>
+                                            <div class="d-flex flex-column">
+                                                <span class="form-text text-muted">
+                                                    Vous pouvez sélectionner jusqu'à {{ order.user.orQuantity }} pièces.
+                                                </span>
+                                                <select name="orstock[]" id="attribution" class="form-control" multiple="multiple" data-max-selection={{ order.user.orQuantity }} required>
+                                                    <option value=""></option>
+                                                    {% for o in orstock %}
+                                                        <option value="{{ o.id }}"># {{ o.ref }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end gap-4 mt-4">
+                                        <button type="submit" class="btn btn-info text-white">Attribuer</button>
+                                    </div>
+                                </form>
+                            {% endif %}
+
+                            {% if order.flagStatus == 6 %}
+                                <form name="order" class="form-group row mb-0 pb-0" method="post" enctype="multipart/form-data">
+                                    <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                        <div class="d-flex">
+                                            <label for="attribution" class="form-label mt-2">Contrat de dépot :</label>
+                                            <input type="file" name="fileDepositContract" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                        <div class="d-flex">
+                                            <label for="attribution" class="form-label mt-2">Attestation de dépot :</label>
+                                            <input type="file" name="fileDepositAttestation" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center justify-content-lg-end gap-4 mt-4">
+                                        <button type="submit" class="btn btn-info text-white">Enregistrer</button>
+                                    </div>
+                                </form>
+                                {% if order.fileDepositContract != null %}
+                                    <h1 class="card-title my-0 py-0 text-muted">Contrat de dépot (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 9}) }}" target="_blank">Télécharger</a>)</h1>
+                                    <embed src="{{ order.fileDepositContract|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                                {% endif %}
+                                {% if order.fileDepositAttestation != null %}
+                                    <h1 class="card-title my-0 py-0 text-muted">Attestation de dépot</h1>
+                                    <embed src="{{ order.fileDepositAttestation|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                                {% endif %}
+                            {% endif %}
+
+                            <div id="divToPrintBill" class="d-none">
+                                {{ render(controller('App\\Controller\\SecurityController::facture', {'id': order.id})) }}
+                            </div>
+                            <div id="divToPrintContratDepot" class="d-none">
+                                {% if order.ppex is same as(true) %}
+                                    {{ render(controller('App\\Controller\\SecurityController::contratDeDepotPpex', {'id': order.id})) }}
+                                {% else %}
+                                    {{ render(controller('App\\Controller\\SecurityController::contratDeDepot', {'id': order.id})) }}
+                                {% endif %}
+                            </div>
+                            <div id="divToPrintAttestationDepot" class="d-none">
+                                {{ render(controller('App\\Controller\\SecurityController::attestationDepot', {'id': order.id})) }}
+                            </div>
+
+                            {% block javascripts %}
+                                <script>
+                                    function divToPrintBill() {
+                                        const divToPrintBill = document.getElementById('divToPrintBill');
+                                        const popupWin = window.open('', '_blank');
+                                        popupWin.document.open();
+                                        popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrintBill.innerHTML + '</html>');
+                                        popupWin.document.close();
+                                    }
+                                    function divToPrintContratDepot() {
+                                        const divToPrintContratDepot = document.getElementById('divToPrintContratDepot');
+                                        const popupWin = window.open('', '_blank');
+                                        popupWin.document.open();
+                                        popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrintContratDepot.innerHTML + '</html>');
+                                        popupWin.document.close();
+                                    }
+                                    function divToPrintAttestationDepot() {
+                                        const divToPrintAttestationDepot = document.getElementById('divToPrintAttestationDepot');
+                                        const popupWin = window.open('', '_blank');
+                                        popupWin.document.open();
+                                        popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrintAttestationDepot.innerHTML + '</html>');
+                                        popupWin.document.close();
+                                    }
+
+                                </script>
+                            {% endblock %}
+                            
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

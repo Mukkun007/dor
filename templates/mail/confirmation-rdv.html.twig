@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Pièce de monnaie en or commémorative de 50 Ariary</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+    </head>
+    <body>
+        <div class="body">
+            <div style=" height: 100vh;margin-right: auto;margin-left: auto;width: 600px !important; padding-left: 0 !important;padding-right: 0 !important; padding-top: 3rem !important;">
+                <div>
+                    <p>{{ civility[user.civility] }} {{ user.name }} {{ user.firstname }},</p>
+                    <p>Bonjour,</p>
+                    <p>Votre rendez-vous pour la récupération de votre pièce pour le {{ user.preorder.dateCalendar }} {{ user.preorder.typeCalendar == 'AM' ? 'entre 09h00 et 11h30' : (user.preorder.typeCalendar == 'PM' ? 'entre 14h00 et 16h30' : '') }} est enregistrée </p>
+                    <p>Cordialement,</p>
+                    <img src="https://pieces-monnaies-or-50.bfm.mg/img/ban_mail.png" alt="BFM">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

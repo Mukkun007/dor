@@ -1,0 +1,52 @@
+
+.dashboardModeLivraison-mobile{
+    background-color: #fff;
+    padding-bottom: 30px !important;
+  }
+  .dashboardModeLivraison-step{
+    flex-wrap: nowrap !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    position: relative;
+    
+  }
+  /* .modal-backdrop.show{
+    opacity: 0 !important;
+  } */
+  .dashboardModeLivraison-step .step3 {
+    background-color: #9f662e;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .dashboardModeLivraison-mobile h6 {
+    color: #004474;
+  }
+  
+  .dashboardModeLivraison-mobile .step3::after {
+    content: "";
+    height: 2px;
+    width: 30px;
+    position: absolute;
+    background-color: #9f662e;
+    left: 62px;
+    top: 50%;
+  }
+  
+
+  @media (min-width: 1025px) {
+  
+    .dashboardModeLivraison-mobile {
+      display: none;
+    }
+  }

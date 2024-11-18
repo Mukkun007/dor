@@ -1,0 +1,306 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Livraison{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Livraison</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_livraison_siege_index') }}">Livraison</a></li>
+                <li class="breadcrumb-item active">Récupération Siège</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body container">
+                        <h1 class="card-title mb-0 pb-0 text-muted">Précommande</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>N° Précommande</th>
+                                    <td class="text-right">{{ order.reference }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date inscription</th>
+                                    <td class="text-right">{{ order.user.createdAt|date('d/m/Y H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date paiement</th>
+                                    <td class="text-right">{{ order.datePaiement|date('d/m/Y H:i:s') }}</td>
+                                </tr>
+                                 <tr>
+                                    <th>Nombre de pièce commandé</th>
+                                    <td class="text-right">{{ order.user.orQuantity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Statut de la précommande</th>
+                                    <td class="text-right">{{ status[order.flagStatus] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Utilisateur</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Civilité</th>
+                                    <td class="text-right">{{ civility[order.user.civility] }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom & prénom</th>
+                                    <td class="text-right">{{ order.user.name }} {{ order.user.firstname }}</td>
+                                </tr>
+                                {% if order.user.passport != null and order.user.passportExp != null %}
+                                    <tr>
+                                        <th>Passeport</th>
+                                        <td class="text-right">{{ order.user.passport }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date d'expiration</th>
+                                        <td class="text-right">{{ order.user.passportExp }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pays</th>
+                                        <td class="text-right">{{ order.user.country is not null ? order.user.country.libelle : 'Madagascar' }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.user.passport == null and order.user.passportExp == null %}
+                                    <tr>
+                                        <th>CIN</th>
+                                        <td class="text-right">{{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        {% if order.flagStatus > 4 and order.flagStatus < 30 %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Livraison</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Lieu de récupération choisi</th>
+                                        <td class="text-right">Siège</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date de livraison choisie</th>
+                                        <td class="text-right">{{ order.dateCalendar|date('d/m/Y') }} {{ order.typeCalendar == 'AM' ? 'de 09h00 à 11h30' : (order.typeCalendar == 'PM' ? 'de 14h00 à 16h30' : '') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {% if order.choiceLivraison == 3 %}
+                                <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Mandataire</h1>
+                                <table class="table m-0">
+                                    <tbody>
+                                        <tr>
+                                            <th>OTP</th>
+                                            <td class="text-right">{{ order.otp }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nom & prénom</th>
+                                            <td class="text-right">{% if order.tierceCivility is not empty %}{{ civility[order.tierceCivility] }} {% endif %}{{ order.nameTierce }} {{ order.firstnameTierce }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date de naissance</th>
+                                            <td class="text-right">{{ order.tierceBirthday }} à {{ order.tierceAddress }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CIN</th>
+                                            <td class="text-right">{{ order.cinTierce|slice(0, 3) }} {{ order.cinTierce|slice(3, 3) }} {{ order.cinTierce|slice(6, 3) }} {{ order.cinTierce|slice(9, 3) }}</td>
+                                        </tr>
+                                        {% if order.tierceDuplicata is not null and order.tierceDuplicata is not empty %}
+                                            <tr>
+                                                <th>Duplicata du</th>
+                                                <td class="text-right">{{ order.tierceDuplicata }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <th>Téléphone</th>
+                                            <td class="text-right">{{ order.tiercePhone }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        {% endif %}
+                        {% if order.flagStatus == 6 %}
+                            <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Pièce</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                <tr>
+                                    <th>Référence</th>
+                                    <td class="text-right">
+                                    {% for o in orStockOrder %}
+                                        <span class="border px-2">{{ o.ref }}</span>
+                                    {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Date d'attribution</th>
+                                    <td class="text-right">{{ order.dateLivraison|date('d/m/Y') }}</td>
+                                </tr>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if order.flagStatus > 4 and order.flagStatus < 30 %}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h1 class="card-title mb-0 pb-0 text-muted">Livraison</h1>
+                            {% if order.flagStatus == 6 %}
+                                <div class="d-flex flex-column align-items-start">
+                                    <button type="button" class="btn d-block rounded-pill mt-2" onclick="PrintDiv();">
+                                        <span>
+                                            <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                            </svg>
+                                        </span>
+                                        Imprimer l'accusé de réception
+                                    </button>
+                                    <button type="button" class="btn d-block rounded-pill mt-2" onclick="divToPrintPrelevement();">
+                                        <span>
+                                            <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                            </svg>
+                                        </span>
+                                        Imprimer le bordereau de prélèvement
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+
+                        {% if order.flagStatus == 5 %}
+                            <form name="order" method="post" class="form-group row mb-0 pb-0">
+                                <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                    <div class="d-flex">
+                                        <label for="attribution" class="form-label">Pièce :</label>
+                                        <select name="orstock[]" id="attribution" class="form-control" multiple="multiple" data-max-selection={{ order.user.orQuantity }} required>
+                                            <option value=""></option>
+                                            {% for o in orstock %}
+                                                <option value="{{ o.id }}"># {{ o.ref }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    {% if order.cinTierce is not empty %}
+                                        <div class="d-flex">
+                                            <label for="user_civility" class="form-label">Civilité <span class="text-danger">*</span></label>
+                                            <select name="tierceCivility" id="user_civility" class="form-control" required>
+                                                {% for key, value in civility %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_name" class="form-label">Nom : <span class="text-danger">*</span></label>
+                                            <input type="text" name="tierceName" maxlength="50" id="user_name" class="form-control" value="{{ order.nameTierce }}" required>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_firstname" class="form-label">Prénom : <span class="text-danger">*</span></label>
+                                            <input type="text" name="tierceFirstname" maxlength="50" id="user_firstname" class="form-control" value="{{ order.firstnameTierce }}" required>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_cin" class="form-label">CIN : <span class="text-danger">*</span></label>
+                                            <input type="text" name="tierceCin" inputmode="numeric" pattern="\d*" maxlength="12" id="user_cin" class="form-control" value="{{ order.cinTierce }}" required>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_birthday" class="form-label">Né(e) le : <span class="text-danger">*</span></label>
+                                            <input type="text" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxlength="10" name="tierceBirthday" id="user_birthday" class="form-control" required>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_address" class="form-label">A : <span class="text-danger">*</span></label>
+                                            <input type="text" name="tierceAddress" maxlength="50" id="user_address" class="form-control"  required>
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_birthday" class="form-label">Duplicata du :</label>
+                                            <input type="text" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" name="order[tierceDuplicata]" maxlength="10" id="user_birthday" class="form-control">
+                                        </div>
+                                        <div class="d-flex">
+                                            <label for="user_phone" class="form-label">Numéro de tel <span class="text-danger">*</span></label>
+                                            <input type="text" placeholder="03x xx xxx xx" inputmode="numeric" pattern="\d*" maxlength="15" name="tiercePhone" id="user_phone" class="form-control" required>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-center justify-content-lg-end gap-4 mt-4">
+                                    <button type="submit" class="btn btn-info text-white">Attribuer</button>
+                                </div>
+                            </form>
+                        {% endif %}
+
+                        {% if order.flagStatus == 6 %}
+                            <form name="order" class="form-group row mb-0 pb-0" method="post" enctype="multipart/form-data">
+                                <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end mb-3">
+                                    <div class="d-flex">
+                                        <label for="attribution" class="form-label mt-2">Accusé de réception :</label>
+                                        <input type="file" name="fileReception" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                    <div class="d-flex">
+                                        <label for="attribution" class="form-label mt-2">Bordereau de prélèvement :</label>
+                                        <input type="file" name="filePrelevement" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center justify-content-lg-end gap-4 mt-4">
+                                    <button type="submit" class="btn btn-info text-white">Enregistrer</button>
+                                </div>
+                            </form>
+                            
+                        {% endif %}
+
+                        <div id="divToPrint" class="d-none">
+                            {{ render(controller('App\\Controller\\SecurityController::accuseReception', {'id': order.id})) }}
+                        </div>
+                        <div id="divToPrintPrelevement" class="d-none">
+                            {{ render(controller('App\\Controller\\SecurityController::bordereauPrelevement', {'id': order.id})) }}
+                        </div>
+
+                        {% block javascripts %}
+                            <script>
+                                function PrintDiv() {
+                                    const divToPrint = document.getElementById('divToPrint');
+                                    const popupWin = window.open('', '_blank');
+                                    popupWin.document.open();
+                                    popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                                    popupWin.document.close();
+                                }
+
+                                function divToPrintPrelevement() {
+                                    const divToPrintPrelevement = document.getElementById('divToPrintPrelevement');
+                                    const popupWin = window.open('', '_blank');
+                                    popupWin.document.open();
+                                    popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrintPrelevement.innerHTML + '</html>');
+                                    popupWin.document.close();
+                                }
+                            </script>
+                        {% endblock %}
+
+                    </div>
+                </div>
+                {% if order.fileAccuse != null %}
+                    <div class="mt-3 card">
+                        <h1 class="card-title my-0 py-0 ps-4 pt-4 text-muted">Accusé de réception (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 7}) }}" target="_blank">Télécharger</a>)</h1>
+                        <embed src="{{ order.fileAccuse|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                    </div>
+                {% endif %}
+                {% if order.filePrelevement != null %}
+                    <div  class="mt-3 card">
+                        <h1 class="card-title my-0 py-0 ps-4 pt-4 text-muted">Bordereau de prélèvement (<a href="{{ path('admin_app_order_download', {'id': order.id, 'type': 8}) }}" target="_blank">Télécharger</a>)</h1>
+                        <embed src="{{ order.filePrelevement|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

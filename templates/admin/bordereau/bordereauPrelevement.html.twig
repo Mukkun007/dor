@@ -1,0 +1,81 @@
+<div class="d-flex align-items-end mb-5">
+    <div class="login-wrapper-logo">
+        <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="img-fluid" style="width: 200px"></a>
+    </div>
+    <div style="color:grey;width:100%;" class="text-center"><h1 class="text-center mb-5">BORDEREAU DE PRELEVEMENT A LA CAISSE OR</h1></div>
+</div>
+<div  class="d-flex justify-content-between mb-3">
+    <div style="color:#004877;">
+        <span>BANKY FOIBEN'I MADAGASIKARA</span><br />
+        <span>Lalana Revolisiona Sosialista Malagasy Antaninarenina</span><br />
+        <span>Antananarivo 101 - Madagasikara</span><br />
+        <span>(261) 20 22 217 51</span><br />
+        <span>banky-foibe@bfm.mg</span><br />
+        <span>BFM Antaninarenina</span>
+    </div>
+    <div>
+        <div>
+            <div style="background:#418ab3;" class="p-1">
+                <h6 class="text-center pe-3 ps-3" style="color:#fff;">DATE</h6>
+            </div>
+            <span id="currentDate" style="color:black;display:block; width:100%;" class="text-center">{{ "now"|date("d/m/Y") }}</span>
+        </div>
+        <div>
+            <div style="background-color:#418ab3;" class="p-1">
+                <h6 class="text-center pe-3 ps-3" style="color:#fff;">REF</h6>
+            </div>
+            <span style="color:black;display:block; width:100%;" class="text-center">{{ order.user.reference }}</span>
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+ 
+    <div style="background-color:#418ab3;" class="p-1"><h6 style="color:#fff;">Désignation</h6></div>
+    <div style="color:black;" class="d-flex flex-column justify-content-center align-items-center">
+        <span>Pièce de monnaie en or</span>
+        <span>commémorative de 50 Ariary</span>
+    </div>
+</div>
+<div class="mb-3">
+   
+    <div style="background-color:#418ab3;" class="p-1"><h6 style="color:#fff;">Quantité</h6></div>
+    <div style="color:black;">
+        <span>1</span>
+    </div>
+    
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+    <div style="width:100%;">
+        <div style="background-color:#418ab3;" class="p-1"><h6  style="color:#fff;">Poids</h6></div>
+        <span style="color:black;display:block; width:100%;" >1 Oz</span>
+    </div>
+    <div style="width:100%;">
+        <div style="background-color:#418ab3;" class="p-1"><h6  style="color:#fff;">Numéro de série</h6></div>
+        <span style="color:black;display:block; width:100%;">N° de série : {{ order.orStock is not null ? order.orStock.ref : '' }} </span>
+    </div>
+</div>
+
+<div class="mb-3">
+   
+    <div style="background-color:#418ab3;" class="p-1"><h6 style="color:#fff;">Pureté</h6></div>
+    <span style="color:black;display:block; width:100%;">999,90 %</span>
+   
+</div>
+<div class="mb-3">
+   
+    <div style="background-color:#418ab3;" class="p-1"><h6 style="color:#fff;">Numéro de compte</h6></div>
+    <span style="color:black;display:block; width:100%;" >116114</span>
+   
+</div>
+<div class="mb-3">
+   
+    <div style="background-color:#418ab3;" class="p-1"><h6 style="color:#fff;">Observations</h6></div>
+    <span style="color:black;display:block; width:100%;" >Ref dossier N° {{ order.user.reference }} </span>
+   
+</div>
+<div class="d-flex justify-content-end">
+   
+    <div style="background-color:#418ab3;" class="p-1"><h6 class="text-center" style="color:#fff;">LE DEMANDEUR</h6></div>
+   
+</div>

@@ -1,0 +1,252 @@
+/* Define a custom style for the radio button */
+.custom-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.custom-radio input[type="radio"] {
+  display: none; /* Hide the default radio button */
+}
+
+label {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-radio input[type="radio"] + label:before {
+  content: "";
+  display: inline-block;
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  border-radius: 50%;
+  border: 2px solid #ccc; /* Default color */
+  margin-right: 10px;
+  background-color: #004877;
+}
+
+.custom-radio input[type="radio"] + label:after {
+  content: "";
+  position: absolute;
+  top: 1.5px;
+  left: 1.5px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-right: 10px;
+  background-color: transparent;
+}
+
+.custom-radio input[type="radio"]:checked + label:before {
+  background-color: #9f662e;
+}
+
+label {
+  color: #004877;
+}
+
+.custom-radio input[type="radio"]:checked + label {
+  color: #9f662e;
+}
+
+/* These are just a test styles - you don't need them in your project */
+
+a {
+  color: orange;
+}
+
+.new-tab-link {
+  padding-right: 14px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3ggXDSIzCeRHfQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA9SURBVBjTY2RAA/+XMvxHF2NkwAOwacCq4P9Shv8suFQzRiNsYUEXwKoJ2VhkNrIaJgYiAAs2N2BVRMirAD6JHi10MCdVAAAAAElFTkSuQmCC)
+    no-repeat right center;
+}
+
+.page-title {
+  font: 400 40px/1.5 Open Sans, sans-serif;
+  text-align: center;
+}
+
+.circles {
+  margin-bottom: -10px;
+}
+
+.circle {
+  width: 100px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.circle canvas {
+  vertical-align: top;
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.circle strong {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 30px;
+}
+
+.circle strong i {
+  font-style: normal;
+  font-size: 0.6em;
+  font-weight: normal;
+}
+
+.circle span {
+  display: block;
+  color: #fff;
+}
+.circle .countdown-number {
+  position: relative;
+  top: -45px;
+}
+p {
+  margin: 40px 0;
+}
+
+.install {
+  display: inline-block;
+}
+
+.install a {
+  display: block;
+  width: auto;
+  vertical-align: middle;
+  padding: 6px 12px;
+  line-height: 20px;
+  background-color: #111;
+  color: #fff;
+  border-radius: 3px;
+  text-decoration: none;
+  margin: 5px auto;
+  transition: all 0.3s;
+}
+
+.install code {
+  padding: 6px 12px;
+  display: block;
+  font: 13px/20px Courier New, Liberation Mono, monospase;
+  background-color: #333333;
+  border-radius: 4px;
+  margin: 5px 0;
+  white-space: nowrap;
+}
+
+.install a:hover {
+  background-color: #222;
+}
+
+.credits {
+  color: #aaa;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.credits img {
+  margin-left: 4px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.dashboardPaiement-mobile{
+  background-color: #fff;
+  padding-bottom: 30px !important;
+}
+.dashboardPaiement-step{
+  flex-wrap: nowrap !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  position: relative;
+  
+}
+.dashboardPaiement-step .step2 {
+  background-color: #9f662e;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.dashboardPaiement-mobile h6 {
+  color: #004474;
+}
+
+.dashboardPaiement-mobile .step2::after {
+  content: "";
+  height: 2px;
+  width: 30px;
+  position: absolute;
+
+  background-color: #9f662e;
+  left: 62px;
+  top: 50%;
+}
+
+.dashboardPaiement-mobile .card {
+}
+
+.countdown-number{
+  font-size: 2rem;
+}
+
+@media (min-width: 480px) {
+  .credits {
+    position: inherit;
+  }
+}
+
+@media (min-height: 600px) {
+  .credits {
+    position: inherit;
+  }
+}
+
+@media (min-width: 768px) {
+ 
+}
+
+@media (min-width: 1024px) {
+  .countdown-number{
+    font-size: 1rem;
+  }
+
+  .dashboardPaiement-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .credits {
+    position: inherit;
+  }
+}
+
+@media (max-height: 600px) {
+  .credits {
+    position: inherit;
+  }
+}
+
+@media (max-width: 768px) {
+  .countdown-number{
+    font-size: 2rem;
+  }
+}

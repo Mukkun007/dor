@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce d'or commémorative BFM - Suivi précommande</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/stepper.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/github.min.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrapCalendar.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarAll.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarMain.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarDayGrid.main.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/dashboardModeLivraison.css') }}" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/locales/fr.min.js"></script>
+
+        <script src="{{ asset('js/highlight.min.js') }}"></script>
+
+        
+    </head>
+
+    <body class="d-flex flex-column h-100" style="background-color: #004776;">
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main p-5">
+
+            <div class="container">
+
+                <div class="row mb-5 d-flex">
+                    <div class="col-12 containerHeader">
+
+                       <div class="header-dashboard">
+                            <div class="dashboard-wrapper-logo pt-5 pt-md-0">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="dashboard-logo"></a>
+                            </div>
+                            <div class="wrapper-title m-auto">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title-header">pièce de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title-header">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="referenceDashboard">
+                            <span class="me-3 d-flex flex-column flex-md-row" style="color:white;">Suivi précommande : <strong class="text-gold ms-md-2">REF {{ app.user.reference }}</strong></span>
+                            <div class="d-flex">
+                                <div class="nav-item dropdown">
+
+                                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-3" ></i>
+                                </a><!-- End Profile Image Icon -->
+
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile  py-3 ">
+                                    
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Suivre ma commande</span>
+                                        </a>
+                                    </li>
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ path( 'update_user') }}">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Informations personnelles</span>
+                                        </a>
+                                    </li>
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ path('user_mdp') }}">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Modification du mot de passe</span>
+                                        </a>
+                                    </li>
+
+                                </ul><!-- End Profile Dropdown Items -->
+                            </div><!-- End Profile Nav -->
+
+                            {# <i class="bi bi-person-circle me-3"></i> #}
+                            <a href="{{ path('app_logout', {'token': csrf_token('logout')}) }}"><i class="bi bi-power"></i></a>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+        
+            <div class="card dashboard-desktop">
+                <div class="accordion" id="accordionExample">
+                <h3></h3>
+                <div class="steps" >
+                    <progress id="progress" value="100" max="100"></progress>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center align-middle"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="false"
+                            aria-controls="collapseOne"
+                            disabled
+                            style="border:5px solid #a0722e;background-color:#fff;"
+                        >
+                             <i class='bx bx-check  fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+
+                        </button>
+                        <div class="step-title mt-3" style="color:#004776;">Traitement par BFM</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="collapseTwo"
+                            disabled
+                            style="border:5px solid #a0722e;background-color:#fff;"
+
+                        >
+                        <i class='bx bx-check fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+
+                        </button>
+                        <div class="step-title mt-3" style="color:#004776;">Paiement</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree"
+                            aria-expanded="false"
+                            aria-controls="collapseThree"
+                            disabled
+                            style="border:5px solid #a0722e;background-color:#fff;"
+
+                        >
+                        <i class='bx bx-check fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+
+                        </button>
+                        <div class="step-title mt-3" style="color:#004776;">Mode de livraison</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed img-livraison"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour"
+                            aria-expanded="true"
+
+                            aria-controls="collapseFour"
+                            disabled
+
+                        >
+                            <img src="{{ asset('img/Face.png') }}" alt="Step Image" style="width:70px;height:70px;">
+                        </button>
+                        <div class="step-title mt-3" style="color:#a0722e;">livraison</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="headingOne"></div>
+
+                    <div
+                    id="collapseOne"
+                    class="collapse show"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                    >
+                    
+                    </div>
+                </div>
+                <div>
+                    <div id="headingTwo"></div>
+                    <div
+                    id="collapseTwo"
+                    class="collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                    >
+                    
+                    </div>
+                </div>
+                <div>
+                    <div id="headingThree"></div>
+                    <div
+                    id="collapseThree"
+                    class="collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample"
+                    >
+                    
+                    </div>
+                </div>
+                <div>
+                    <div id="headingFour"></div>
+                    <div
+                    id="collapseFour"
+                    class="collapse show"
+                    aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample"
+                    >
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body p-5">
+                                        <span class="d-flex justify-content-center align-items-center" style="color:#004776;font-size:2rem;font-weight:bold;">Merci pour votre achat !</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+        
+        
+    
+    </div>
+    <div class="dashboard-mobile">
+        <div class="dashboard-mobile-div1">
+            <div class="step1" style="color:white !important;">4</div>
+            <h6 class="m-0" style="color:#004474 !important;">Livraison</h6>
+        </div>
+        <div>
+            {# <h6 class="text-blue mt-5" style="color:#004474 !important;">Votre précommande est en cours de traitement auprès de BFM.</h6>
+            <h6 class="text-blue" style="color:#004474 !important;">Un mail de notification vous sera envoyé par la suite.</h6> #}
+        </div>
+    </div>
+
+    </main><!-- End main -->
+    {{ include('front/_footer.html.twig') }}   
+        
+       
+
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/alert.js') }}"></script>
+        <script src="{{ asset('js/bundle-bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery/dist/jquery-3.2.1.slim.min.js') }}"></script>
+        <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap4.0.0.js') }}"></script>
+        <script src="{{ asset('js/jqueryCircular.js') }}"></script>
+        <script src="{{ asset('js/circle-progress.js') }}"></script>
+        {# <script src="{{ asset('js/dashboard-index.js') }}"></script> #}
+        <script>
+            $(document).ready(function () {
+                {% for message in app.flashes('success') %}
+                    flashAlert('success', '{{ message }}');
+                {% endfor %}
+
+                {% for message in app.flashes('error') %}
+                    flashAlert('error', '{{ message }}');
+                {% endfor %}
+
+            });
+
+
+            
+
+            const stepButtons = document.querySelectorAll(".step-button");
+            const progress = document.querySelector("#progress");
+
+            Array.from(stepButtons).forEach((button, index) => {
+                button.addEventListener("click", () => {
+                progress.setAttribute(
+                    "value",
+                    (index * 100) / (stepButtons.length - 1)
+                ); //there are 3 buttons. 2 spaces.
+
+                stepButtons.forEach((item, secindex) => {
+                    if (index > secindex) {
+                    item.classList.add("done");
+                    }
+                    if (index < secindex) {
+                    item.classList.remove("done");
+                    }
+                });
+                });
+            });
+
+            stepButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    // Créez un tableau pour stocker les chemins d'URL correspondant à chaque étape
+                    const paths = [
+                        "{{ path('dashboard_index') }}",           // Accueil
+                        "{{ path('dashboard_paiement') }}",       // Paiement
+                        "{{ path('dashboard_modeLivraison') }}",  // Mode de livraison
+                        "{{ path('dashboard_livraison') }}"       // Livraison
+                    ];
+
+                    // Récupérez le chemin d'URL correspondant à l'index de l'étape actuelle
+                    const path = paths[index];
+
+                    // Changez l'URL en utilisant la méthode pushState pour que l'historique du navigateur soit correct
+                    window.history.pushState({ path: path }, '', path);
+                });
+            });
+
+            
+
+
+        </script>
+ 
+
+ 
+    </body>
+
+</html>

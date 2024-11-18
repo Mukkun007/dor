@@ -1,0 +1,20 @@
+.entrer{
+    border-radius:50px;
+    background-color: #00bf63;
+    color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+label{
+    width:50%!important;
+    font-size: 1rem;
+    color:#024775;
+    font-weight: 700;
+}
+.referenceInput{
+    width:60% !important;
+}
+.referenceDossier{
+    border: 2px dashed #024775;
+}

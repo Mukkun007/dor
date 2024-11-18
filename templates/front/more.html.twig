@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce de monnaie en or commémorative de 50 Ariary - A propos</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+
+    </head>
+
+    <body class="d-flex flex-column h-100" style="background-color: #004776;">
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main p-5">
+
+{#            <div id="test" class="row">#}
+{#                <div class="col-12">#}
+{#                    <h1 class="text-center m-auto p-2">VERSION TEST</h1>#}
+{#                </div>#}
+{#            </div>#}
+
+            <div class="container">
+
+                <div class="row mb-5">
+                    <div class="col-12{# mt-5#}">
+                        <div class="header-more">
+                            <div class="more-wrapper-logo">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/Face.png') }}" alt="BFM" class="more-logo"></a>
+                            </div>
+                            <div class="wrapper-title m-auto">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">Pièce de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2 class="text-gold formulaire-inscription">Célébration du 50<sup>ème</sup> anniversaire de Banky Foiben’i Madagasikara </h2>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12 text-grey text-center more-presentation">
+                        <p class="mb-1">Dans le cadre de son cinquantenaire, BFM a pris l'initiative d'émettre des pièces de monnaie en or de 50 Ariary Commémoratives.</p>
+                        <p class="mb-4">Le décret N°2023-560 du 17 mai 2023 a consacré l'émission de cette pièce d'or.</p>
+                        <p class="mb-1">L'émission de pièces d'or constitue une pratique habituelle adoptée par les banques centrales et institutions monétaires afin de marquer un évènement</p>
+                        <p>important touchant la vie de la Nation.</p>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 d-flex justify-content-between mb-4 caracteristique-more">
+                        <h2 class="text-gold mb-0">Caractéristiques de la pièce d'Or</h2>
+                        <div class="d-flex justify-content-between">
+                            {% if campaign is same as(true) %}
+                                <a href="{{ path('app_signup') }}" class="btn btn-preorder">Inscription</a>
+                                <a href="{{ path('app_login') }}" class="btn btn-dashboard ms-5">Suivre ma commande</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="text-center text-grey" width="50%">Métal (Alliage)</td>
+                                    <td class="text-center text-grey">Or</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-grey">Pureté</td>
+                                    <td class="text-center text-grey">Or Pur 999.9 (24 Carats)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-grey">Poids</td>
+                                    <td class="text-center text-grey">1 Oz (31,1g)</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-grey">Diamètre</td>
+                                    <td class="text-center text-grey">35 mm</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-grey">Origine</td>
+                                    <td class="text-center text-grey">Madagasikara</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-grey">Millésime</td>
+                                    <td class="text-center text-grey">Juin 2023</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <table class="table price">
+                            <tbody>
+                                <tr class="prix-more">
+                                    <td class="text-center" width="50%"><h3 class="mb-0 text-white">Prix unitaire</h3></td>
+                                    <td class="text-center"><h3 class="mb-0 text-white">{{ price }} Ariary</h3></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+               
+
+            </div>
+
+        </main><!-- End main -->
+         {{ include('front/_footer.html.twig') }}
+
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+
+    </body>
+
+</html>

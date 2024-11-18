@@ -1,0 +1,92 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Précommandes{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Précommandes</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Acceptées</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable-export">
+                            <thead>
+                                <tr>
+                                    <th class="export">#</th>
+                                    <th>Nom<br/>Prénoms</th>
+                                    <th class="export">Nom</th>
+                                    <th class="export">Prénoms</th>
+                                    <th class="export">CIN / Passeport</th>
+                                    <th class="export">Pays</th>
+                                    <th class="export searchPane">Ville</th>
+                                    <th class="export">Compte</th>
+                                    <th class="export searchPane">Paiement</th>
+                                    <th class="export">Date d’inscription</th>
+                                    <th class="export searchPane">Nombre de pièces d'or</th>
+                                    <th class="export searchPane">Statut</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders|filter(order => order.flagStatus != 2 and order.flagStatus != 99) %}
+                                    <tr>
+                                        <td>{{ order.reference }}</td>
+                                        <td>{{ order.user.name }}<br/>{{ order.user.firstname }}</td>
+                                        <td>{{ order.user.name }}</td>
+                                        <td>{{ order.user.firstname }}</td>
+                                        <td>
+                                            {% if order.user.cin != null %}
+                                                {{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}
+                                            {% elseif order.user.passport != null %}
+                                                {{ order.user.passport }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ order.user.country is not null ? order.user.country.libelle : 'Madagascar' }}</td>
+                                        <td>{{ order.user.city }}</td>
+                                        <td>
+                                            {% if order.user.rib != null %}
+                                                {{ order.user.rib|slice(0, 5) }} {{ order.user.rib|slice(5, 5) }} {{ order.user.rib|slice(10, 11) }} {{ order.user.rib|slice(21, 2) }}
+                                            {% elseif order.user.affiliation != null %}
+                                                {{ order.user.affiliation }}
+                                            {% elseif order.user.iban != null %}
+                                                {{ order.user.iban }} - {{ order.user.swift }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ payment[order.user.paymentMethod] }}</td>
+                                        <td>{{ order.user.createdAt|date('Y-m-d H:i:s') }}</td>
+
+                                        {# {% if order.flagStatus != 4 and order.flagStatus != 5 and order.flagStatus != 6 %}
+                                            <td>{{ order.user.orQuantity }}</td>
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %} #}
+
+                                        <td>{{ order.user.orQuantity }}</td>
+                                        <td>{{ constant[order.flagStatus] }}</td>
+                                        <td class="text-right">
+                                            <a href="{{ path('admin_app_order_show', {'id': order.id}) }}" class="btn btn-sm btn-success">Détails</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

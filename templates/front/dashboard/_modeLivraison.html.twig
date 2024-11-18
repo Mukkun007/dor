@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce d'or commémorative BFM - Suivi précommande</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/stepper.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/github.min.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrapCalendar.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarAll.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarMain.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendarDayGrid.main.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/dashboardModeLivraison.css') }}" rel="stylesheet">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/locales/fr.min.js"></script>
+
+        <script src="{{ asset('js/highlight.min.js') }}"></script>
+
+
+    </head>
+
+    <body class="d-flex flex-column h-100" style="background-color: #004776;">
+    
+        {# <div id="spinner" class="spinner bg-white d-none  align-items-center justify-content-center" style="position:absolute;width:100%;height:100vh;z-index:1000;">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div> #}
+
+        <main id="main" class="main p-5">
+
+            <div class="container">
+
+                <div class="row mb-5 d-flex">
+                    <div class="col-12 containerHeader">
+
+                       <div class="header-dashboard">
+                            <div class="dashboard-wrapper-logo pt-5 pt-md-0">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="dashboard-logo"></a>
+                            </div>
+                            <div class="wrapper-title m-auto">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title-header">pièce de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title-header">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="referenceDashboard">
+                            <span class="me-3 d-flex flex-column flex-md-row" style="color:white;">Suivi précommande : <strong class="text-gold ms-md-2">REF {{ app.user.reference }}</strong></span>
+                            <div class="d-flex">
+                                <div class="nav-item dropdown">
+
+                                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-3" ></i>
+                                </a><!-- End Profile Image Icon -->
+
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile  py-3 ">
+
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Suivre ma commande</span>
+                                        </a>
+                                    </li>
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ path( 'update_user') }}">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Informations personnelles</span>
+                                        </a>
+                                    </li>
+                                    <li class="dashboardMenu">
+                                        <a class="dropdown-item d-flex align-items-center" href="{{ path('user_mdp') }}">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Modification du mot de passe</span>
+                                        </a>
+                                    </li>
+
+                                </ul><!-- End Profile Dropdown Items -->
+                            </div><!-- End Profile Nav -->
+
+                            {# <i class="bi bi-person-circle me-3"></i> #}
+                            <a href="{{ path('app_logout', {'token': csrf_token('logout')}) }}"><i class="bi bi-power"></i></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            <div class="card dashboard-desktop">
+                <div class="accordion" id="accordionExample">
+                <h3></h3>
+                <div class="steps" >
+                    <progress id="progress" value="68" max="100"></progress>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center align-middle"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="false"
+                            aria-controls="collapseOne"
+                            disabled
+                            style="border:5px solid #a0722e;background-color:#fff;"
+                        >
+                            <i class='bx bx-check  fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+                        </button>
+                        <div class="step-title" style="color:#004776;">Traitement par BFM</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="collapseTwo"
+                            disabled
+                            style="border:5px solid #a0722e;background-color:#fff;"
+                        >
+                        <i class='bx bx-check fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+                        </button>
+                        <div class="step-title" style="color:#004776;">Paiement</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree"
+                            aria-expanded="true"
+                            aria-controls="collapseThree"
+                            disabled
+                        >
+
+                        </button>
+                        <div class="step-title" style="color:#a0722e;">Mode de livraison</div>
+                    </div>
+                    <div class="step-item">
+                        <button
+                            class="step-button text-center collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour"
+                            aria-expanded="false"
+                            aria-controls="collapseFour"
+                            disabled
+                        >
+
+                        </button>
+                        <div class="step-title" >Livraison</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="headingOne"></div>
+
+                    <div
+                    id="collapseOne"
+                    class="collapse"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
+                    >
+
+                    </div>
+                </div>
+                <div>
+                    <div id="headingTwo"></div>
+                    <div
+                    id="collapseTwo"
+                    class="collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample"
+                    >
+
+                    </div>
+                </div>
+                <div>
+                    <div id="headingThree"></div>
+                    <div
+                    id="collapseThree"
+                    class="collapse show"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample"
+                    >
+                    <div class="row mb-5">
+                      <div class="col-12">
+                          <div class="card">
+                              <div id="pcBody" class="card-body p-5">
+                              {% if (app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE or app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE) and app.user.preorder.choiceMeeting == 2 %}
+                                  <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;width:900px;margin: 0 auto; color: #ffffff" >
+                                      <div class="ml-5" style="display: flex; margin-left:5px;" >
+                                          <h2 style="margin-left:10px;">Votre rendez-vous de récupération vous sera communiqué sous peu.</h2>
+                                      </div>
+                                  </div>
+                              {% elseif dateRDV is not empty and dateRDV is not null and typeRDV is not empty and typeRDV is not null %}
+                                  <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;width:900px;margin: 0 auto; color: #ffffff" >
+                                      <div class="ml-5" style="display: flex; margin-left:5px;" >
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}
+                                              <h2 style="margin-left:10px;">Votre rendez-vous pour la signature du contrat de dépot :<br/><strong>{{ dateRDV|date('d M Y') }} {{ typeRDV == 'AM' ? 'de 9h00 à 11h30' : 'de 14h00 à 16h30' }}</strong></h2>
+                                          {% else %}
+                                              <h2 style="margin-left:10px;">Votre rendez-vous de récupération :<br/><strong>{{ dateRDV|date('d M Y') }} {{ typeRDV == 'AM' ? 'de 9h00 à 11h30' : 'de 14h00 à 16h30' }}</strong></h2>
+                                          {% endif %}
+                                      </div>
+                                      <h5 class="mt-5" style="margin-left:20px;">
+                                          Mode de retrait :
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}Conservation auprès de BFM{% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait auprès de BFM - Siège Antaninarenina{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait auprès de BFM - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait par un mandataire - Siège Antaninarenina{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait par un mandataire - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                      </h5>
+                                      {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                          <h5 style="margin-left:20px;">
+                                              Mandataire : {{ app.user.preorder.nameTierce }} {{ app.user.preorder.firstnameTierce }} - {{ app.user.preorder.cinTierce }}
+                                          </h5>
+                                      {% endif %}
+                                      <div class="d-flex justify-content-end">
+                                          <a href="{{ path('app_changeRdv') }}" class="btn btn-warning me-3">Changer la date du rendez-vous</a>
+                                      </div>
+                                  </div>
+                            {% else %}
+                                    <h2 class="text-center text-gold">
+                                        {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}
+                                            Veuillez cliquer sur la date qui vous convient<br/>pour la signature du contrat de dépot de votre pièce,<br/>du lundi au vendredi,<br/>de 9h00 à 11h30 ou de 14h00 à 16h30
+                                        {% else %}
+                                            Veuillez cliquer sur la date qui vous convient<br/>pour la récupération de votre pièce, du lundi au vendredi<br/>de 9h00 à 11h30 ou de 14h00 à 16h30
+                                        {% endif %}
+                                    </h2>
+
+                                  <div id='calendar' class="pb-5"></div>
+                                  <!-- Add modal -->
+                                  <div class="modal fade edit-form" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog" role="document">
+                                          <div class="modal-content">
+                                              <div class="modal-header border-bottom-0">
+                                                  <h5 class="modal-title" id="modal-title">Choix du rendez-vous</h5>
+                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <form id="myForm" method="POST" enctype="multipart/form-data" name="dateLivraison" action="{{ path('dashboard_modeLivraison') }}">
+                                              <!-- <form id="myForm" method="POST" enctype="multipart/form-data" name="dateLivraison"> -->
+                                                  <div class="modal-body">
+                                                      <div class="alert alert-danger " role="alert" id="danger-alert" style="display: none;">
+                                                          End date should be greater than start date.
+                                                        </div>
+                                                      <div class="form-group">
+                                                          <label for="start-date">Date (YYYY-MM-DD)<span class="text-danger">*</span></label>
+                                                          <input type="text" class="form-control" id="start-date" name="dateLivraison[startDate]" placeholder="start-date" required readonly>
+                                                      </div>
+                                                      <div class="form-group">
+                                                          <label for="event-title">Plage horaire <span class="text-danger">*</span></label>
+                                                          <select class="form-control" id="event-title" name="dateLivraison[selectTime]">
+                                                              <option value="AM">9h00 à 11h30</option>
+                                                              <option value="PM">14h00 à 16h30</option>
+                                                          </select>
+                                                      </div>
+                                                  </div>
+                                                  <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                                      <button type="submit" class="btn btn-success" id="submit-button">Valider</button>
+                                                    </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {% endif %}
+                                </div>
+                              </div>
+
+                          </div>
+                      </div>
+                    <div>
+
+                </div>
+                <div>
+                    <div id="headingFour"></div>
+                    <div
+                    id="collapseFour"
+                    class="collapse"
+                    aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample"
+                    >
+                    disabled
+                    </div>
+                </div>
+
+        </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    <div class="dashboardModeLivraison-mobile mb-3">
+    
+          <div class="dashboardModeLivraison-step">
+            <div class="step3" style="color:white;">3</div>
+            <h6 class="m-0">Mode de livraison</h6>
+          </div>
+          <div>
+              
+          <div id="mobileBody" class="card-body p-3">   
+                {# {% if dateRDV is not empty and typeRDV is not empty %}
+                    <div> #}
+                        {# Afficher le message du rendez-vous #}
+                        {# <p>Le Rendez vous que vous avez pris est le <strong>"{{ dateRDV }} {{ typeRDV }}"</strong></p>
+                    </div>
+                {% else %}     #}
+                {% if dateRDV is not empty and dateRDV is not null and typeRDV is not empty and typeRDV is not null %}
+                    <div class="pl-3 pb-3 pt-3 d-flex flex-column gap-4" style="background-color: #76ADD1;border-left: 5px solid #9f662e;margin: 0 auto; color: #ffffff" >
+                        <div class="ml-5" style="display: flex; margin-left:5px;" >
+                            <h2 style="margin-left:10px;font-size:1.1rem;">Le Rendez vous que vous avez pris est le <strong>"{{ dateRDV }} {{ typeRDV }}"</strong></h2>
+                        </div>
+                        <h5 style="margin-left:20px;">
+                            <span style="font-size:1.1rem;">Mode de retrait : </span><br />
+                            <div style="font-size:1.1rem;">{% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}Conservation auprès de BFM{% endif %}</div>
+                            <div style="font-size:1.1rem;">
+                                {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}
+                                    {% if app.user.preorder.choiceMeeting == 1 %}Retrait auprès de BFM - Siège{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                        {% for key, value in userRT %}
+                                            {% if key == app.user.preorder.userRt %}Retrait auprès de BFM - {{ value }}{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div style="font-size:1.1rem;">
+                                {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                    {% if app.user.preorder.choiceMeeting == 1 %}Retrait par un mandataire - Siège{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                        {% for key, value in userRT %}
+                                            {% if key == app.user.preorder.userRt %}Retrait par un mandataire - {{ value }}{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            
+                        </h5>
+                        <h5 style="margin-left:20px;font-size:1.1rem;">
+                            Mandataire :
+                            <span style="font-size:1rem;">
+                            {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                {{ app.user.preorder.nameTierce }} {{ app.user.preorder.firstnameTierce }} - {{ app.user.preorder.cinTierce }}
+                            {% endif %}
+                            </span>
+                        </h5>
+                        <div class="d-flex justify-content-end">
+                            <a href="{{ path('app_changeRdv') }}" class="btn btn-warning me-3">Changer la date du rendez-vous</a>
+                        </div>
+                    </div>
+                
+            {% else %}
+            <div>
+                <h2 class="text-center text-gold" style="font-size:0.75rem !important;">Veuillez choisir ci-dessous la date (AM ou PM) à laquelle vous voulez récupérez votre pièce</h2>
+       
+                <form id="myFormMobile" method="POST" enctype="multipart/form-data" name="dateLivraison" action="{{ path('dashboard_modeLivraison') }}">
+                    <div class="modal-body">
+                        <div class="alert alert-danger " role="alert" id="danger-alert" style="display: none;">
+                            End date should be greater than start date.
+                        </div>
+                        <div class="form-group">
+                            <label for="start-date">Date (MM-DD-YYYY)<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="start-date-mobile" name="dateLivraison[startDate]" placeholder="start-date" required >
+                        </div>
+                        <div class="form-group">
+                            <label for="event-title">Partie de la journée <span class="text-danger">*</span></label>
+                            <select class="form-control" id="event-title-mobile" name="dateLivraison[selectTime]">
+                                <option value="AM">9h00 à 11h30</option>
+                                <option value="PM">14h00 à 16h30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success" id="submit-button">Valider</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+            
+               
+          </div>
+          
+    </div>
+
+
+    </div>
+
+    </main><!-- End main -->
+    {{ include('front/_footer.html.twig') }}
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confimation</h5>
+                    <button type="button" class="btn-close" id="ferme" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de votre choix ?</p>
+                </div>
+                <div class="modal-footer">
+            
+                    <button type="button" class="btn btn-primary" id="confirmButton">
+                        <div id="spinnerLivraison" class="spinner d-none  align-items-center justify-content-center" style="width:50px;">
+                            <div class="m-auto">
+                                <div class="spinner-border text-primary" style="width:1.25rem;height:1.25rem;" role="status">
+                                    <span class="visually-hidden">Chargement...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="buttonSpan">Confirmer</span></button>
+                    <button type="button" class="btn btn-secondary" id="annuler" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+
+    {# <script src="{{ asset('js/calendar.bundle.min.js') }}"></script> #}
+    <script src="{{ asset('js/calendar.main.min.js') }}"></script>
+    <script src="{{ asset('js/calendar.daygrid.main.js') }}"></script>
+    <script src="{{ asset('js/calendar.interaction.main.js') }}"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/calendar.uuidv4.min.js') }}"></script>
+
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/alert.js') }}"></script>
+        <script src="{{ asset('js/bundle-bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery/dist/jquery-3.2.1.slim.min.js') }}"></script>
+        <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap4.0.0.js') }}"></script>
+        <script src="{{ asset('js/jqueryCircular.js') }}"></script>
+        <script src="{{ asset('js/circle-progress.js') }}"></script>
+        <script src="{{ asset('js/platform.min.js') }}"></script>
+
+
+        <!-- {#<script>
+      let dateDebut = '{{ dateDebut }}';
+      let dateFin = '{{ dateFin }}';
+    </script>#} -->
+
+
+
+
+
+
+        <script>
+            const dateDebut = "{{ dateDebut }}";
+            const dateFin = "{{ dateFin }}";
+            const dateRDV = "{{ dateRDV }}";
+            const typeRDV = "{{ typeRDV }}";
+        </script>
+
+        <script src="{{ asset('js/calendar.js') }}"></script>
+
+   </body>
+</html> 
+
+

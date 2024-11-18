@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+  <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+      <title>Pièce d'or commémorative BFM - Suivi précommande</title>
+      <meta content="" name="description">
+      <meta content="" name="keywords">
+
+      <!-- Favicons -->
+      <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+      <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+      <!-- Google Fonts -->
+      <link href="https://fonts.gstatic.com" rel="preconnect">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+      <!-- Vendor CSS Files -->
+      <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+      <!-- Template Main CSS File -->
+      <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/stepper.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/dashboardPaiement.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/circularProgressBar.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/github.min.css') }}" rel="stylesheet">
+      <script src="{{ asset('js/highlight.min.js') }}"></script>
+
+
+  </head>
+  <body class="d-flex flex-column h-100" style="background-color: #004776;">
+
+    <div id="spinner" class="spinner bg-white d-none">
+        <div class="m-auto">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+        </div>
+    </div>
+    <main id="main" class="main p-5">
+
+      <div class="container" style="max-width:1320px;">
+
+        <div class="row mb-5 d-flex">
+            <div class="col-12 containerHeader">
+
+                <div class="header-dashboard">
+                    <div class="dashboard-wrapper-logo pt-5 pt-md-0">
+                        <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="dashboard-logo"></a>
+                    </div>
+                    <div class="wrapper-title m-auto">
+                        <div class="row my-auto">
+                            <div class="col-12 text-gold text-uppercase">
+                                <h3 class="title-header">pièce de monnaie en or commémorative de 50 Ariary</h3>
+                            </div>
+                        </div>
+                        <div class="row my-auto">
+                            <div class="col-12 text-gold text-uppercase">
+                                <h3 class="title-header">banky foiben'i madagasikara</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="referenceDashboard">
+                    <span class="me-3 d-flex flex-column flex-md-row" style="color:white;">Suivi précommande: <strong class="text-gold ms-md-2">REF {{ app.user.reference }}</strong></span>
+                    <div class="d-flex">
+                        <div class="nav-item dropdown">
+
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-3" ></i>
+                            {# <span class="d-none d-md-block dropdown-toggle ps-2" style="color:#004776;">{{ app.user.name }}</span> #}
+                        </a><!-- End Profile Image Icon -->
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile  py-3 ">
+
+                            <li class="dashboardMenu">
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Suivre ma commande</span>
+                                </a>
+                            </li>
+                            <li class="dashboardMenu">
+                                <a class="dropdown-item d-flex align-items-center" href="{{ path( 'update_user') }}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Informations personnelles</span>
+                                </a>
+                            </li>
+                            <li class="dashboardMenu">
+                                <a class="dropdown-item d-flex align-items-center" href="{{ path('user_mdp') }}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Modification du mot de passe</span>
+                                </a>
+                            </li>
+
+                        </ul><!-- End Profile Dropdown Items -->
+                    </div><!-- End Profile Nav -->
+
+                    {# <i class="bi bi-person-circle me-3"></i> #}
+                    <a href="{{ path('app_logout', {'token': csrf_token('logout')}) }}"><i class="bi bi-power"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card dashboard-desktop">
+            <div class="accordion" id="accordionExample">
+              <div class="steps" >
+                  <progress id="progress" value="35" max="100"></progress>
+                  <div class="step-item">
+                      <button
+                          class="step-button text-center align-middle"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseOne"
+                          aria-expanded="false"
+                          aria-controls="collapseOne"
+                          disabled
+                          style="border:5px solid #a0722e;background-color:#fff;"
+                      >
+                       <i class='bx bx-check  fs-5 position-relative ' style="font-size:2.5rem !important;color:#a0722e;"></i>
+                      </button>
+                      <div class="step-title" style="color:#004776;">Traitement par BFM</div>
+
+                  </div>
+                  <div class="step-item">
+                      <button
+                          class="step-button text-center collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseTwo"
+                          aria-expanded="true"
+                          aria-controls="collapseTwo"
+                          disabled
+                      >
+
+                      </button>
+                      <div class="step-title" style="color:#a0722e;">Paiement</div>
+                  </div>
+                  <div class="step-item">
+                      <button
+                          class="step-button text-center collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseThree"
+                          aria-expanded="false"
+                          aria-controls="collapseThree"
+                          disabled
+                      >
+
+                      </button>
+                      <div class="step-title">Mode de livraison</div>
+                  </div>
+                  <div class="step-item">
+                      <button
+                          class="step-button text-center collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseFour"
+                          aria-expanded="false"
+                          aria-controls="collapseFour"
+
+                      >
+
+                      </button>
+                      <div class="step-title">Livraison</div>
+                  </div>
+              </div>
+
+              <div>
+                  <div id="headingOne"></div>
+
+                  <div
+                  id="collapseOne"
+                  class="collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                  >
+
+                  </div>
+              </div>
+              <div>
+                  <div id="headingTwo"></div>
+                  <div
+                  id="collapseTwo"
+                  class="collapse show"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                  >
+                    <div class="row mb-5">
+                      <div class="col-12">
+                          <div class="card">
+                              <div class="card-body p-5">
+                                  {# <div style="text-align:center;color:#004877;">
+                                    <h5 style="font-size:1.5em;">Félicitations</h5>
+                                    <span>Votre précommande est confirmée</span>
+                                  </div> #}
+                                  {% if ordreVirement is not empty or cheque is not empty %}
+                                  <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;width:900px;margin: 0 auto;" >
+                                      <div class="ml-5" style="display: flex; margin-left:5px;" >
+                                          <h2 style="margin-left:10px;">Votre paiement est en cours de traitement</h2>
+                                      </div>
+                                      <h5 style="margin-left:20px;">
+                                          {% if app.user.paymentMethod == 1 %}
+                                            Référence de l'ordre de virement : {{ app.user.preorder.ov }}
+                                          {% elseif app.user.paymentMethod == 2 %}
+                                              Numéro du chèque : {{ app.user.preorder.cheque_number }}
+                                          {% endif %}
+                                      </h5>
+                                      <h5 style="margin-left:20px;">
+                                          Mode de retrait :
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}Conservation auprès de BFM{% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait auprès de BFM - Siège Antaninarenina{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait auprès de BFM - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait par un mandataire - Siège Antaninarenina{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait par un mandataire - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                      </h5>
+                                      {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                            <h5 style="margin-left:20px;">
+                                              Mandataire : {{ app.user.preorder.nameTierce }} {{ app.user.preorder.firstnameTierce }} - {{ app.user.preorder.cinTierce }}
+                                            </h5>
+                                      {% endif %}
+                                  </div>
+                                  {% endif %}
+
+                                  {% if ordreVirement is empty and cheque is empty %}
+                                  <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;width:900px;margin: 0 auto;" >
+                                      <div class="ml-5" style="display: flex; margin-left:5px;" >
+                                          <img src="{{ asset('img/important-note.png') }}"  class="pr-1" style="width: 15px; height: 15px;margin-top:5px;"/>
+                                          <h5 style="margin-left:10px;">Votre paiement finalisera votre précommande</h5>
+                                      </div>
+
+                                      <div style="margin-left:30px;display:flex;">
+                                          <h4>Délai de paiement :</h4>
+
+
+                                          <div class="countdown ms-5" >
+                                            <div class="circle" id="days">
+                                              <span class="countdown-number">0</span>
+                                              <span>Jours</span>
+                                            </div>
+                                            <div class="circle" id="hours">
+                                              <span class="countdown-number">0</span>
+                                              <span>Heures</span>
+                                            </div>
+                                            <div class="circle" id="minutes">
+                                              <span class="countdown-number">0</span>
+                                              <span>Minutes</span>
+                                            </div>
+                                            <div class="circle" id="seconds">
+                                              <span class="countdown-number">0</span>
+                                              <span>Secondes</span>
+                                            </div>
+                                          </div>
+
+
+                                      </div>
+                                  </div>
+                                  <form name="paiement" id="paiementForm" method="POST" enctype="multipart/form-data" action="{{ path('dashboard_paiement') }}">
+                                     <div style="margin-top:50px;">
+                                          <!-- paiement par cheque -->
+
+                                          <div class="cheque d-none mb-5">
+                                            <div style="color:#76ADD1;  ">
+                                                <span>Renseignements obligatoires:</span><br>
+                                                <span>Bénéficiaire: Banky Foiben'i Madagasikara</span><br>
+                                                <span>Montant (en chiffre et en lettre) : {{ app.user.orQuantity * 12000000 }} Ariary</span><br>
+                                                <span>Date et lien d'émission</span>
+                                            </div>
+                                            <div style="display:flex; justify-content:space-between;margin-top:20px;">
+                                              <div>
+                                                <h6 style="color:#004877">Emetteur</h6>
+                                                {# <input type="text" name="paiement[emetteur]" id="emetteur" class="form-control"   style="background-color:rgb(195,195,195);" > #}
+                                                <input type="text" name="paiement[emetteur]" id="emetteur" class="form-control"  value="{{ app.user.name ~' ' ~ app.user.firstname }}" style="background-color:rgb(195,195,195);" readonly>
+
+                                              </div>
+                                              <div>
+                                                <h6 style="color:#004877">N¤ du chèque</h6>
+                                                <div>
+                                                  {# {% if chequeDigits is iterable %}
+                                                    {% for i in 0..9 %}
+                                                      {% set value = chequeDigits[i] is defined ? chequeDigits[i] : '' %}
+                                                      {% set readonly = value != '' ? 'readonly' : '' %}
+                                                      <input type="text" maxlength="1" name="paiement[cheque][]" class="user_cheque fc-1" aria-label="false" {% if app.user.paymentMethod == '2' %}required{% endif %} style="background-color:rgb(195,195,195);" value="{{ value }}" {{ readonly }}>
+                                                    {% endfor %}
+                                                  {% endif %} #}
+                                                  <input type="text" name="paiement[cheque]" pattern="[a-zA-Z0-9\-\/]*" id="paiement_chequeNumber" class="form-control user_cheque" aria-label="false" {% if app.user.paymentMethod == '2' and app.user.preorder.cheque_number != '' %}readonly{% endif %} {% if app.user.paymentMethod == '2' %}required{% endif %} value="{{ app.user.preorder.cheque_number }}">
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <!-- paiement par virement -->
+                                          <div class="virement d-none mb-5">
+                                            <div style="color:#76ADD1;margin-left:20px;" class="mb-5">
+                                                <span>En faveur de Banky Foiben'i Madagasikara</span><br>
+                                                <span>Adresse: Lalana Revolisiona Sosialista Malagasy Antaninarenina-Antananarivo 101</span><br>
+                                                <span>Coordonnées bancaires : 00999 00140 00000343771 63</span><br>
+                                                <span>Motif: Votre référence dossier d'inscription (ex: OR2024P000XX)</span><br>
+                                                <div style="margin-top:20px;">
+                                                  <span style="color:#76ADD1;">Nous traiterons votre commande dès la réception du paiement</span>
+                                                </div>
+                                            </div>
+                                            <div class= "d-flex" style="justify-content: space-between;margin-left:20px;">
+                                              <div>
+                                                <h6 style="color:#004877">Référence de l'ordre de virement</h6>
+                                                <input type="text" maxlength="23" name="paiement[ordreVirement]" id="paiement_ordreVirement" class="form-control" {% if app.user.paymentMethod == '1' and app.user.preorder.ov != '' %}readonly{% endif %} {% if app.user.paymentMethod == '1' %}required{% endif %} value="{{ app.user.preorder.ov }}">
+                                              </div>
+                                              <div>
+                                                <h6 for="file_ordreVirement" class="form-label" style="color:#004877 !important;">Télécharger votre fichier d'ordre de virement (Taille maximale: 2Mo) <span class="text-danger">*</span></h6>
+                                                <input type="file" accept="image/jpeg,image/png,application/pdf" name="paiement[fichierOrdreVirement]" id="paiement_fichierOrdreVirement" class="form-control" {% if app.user.paymentMethod == '1' %}required{% endif %} >
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <!-- choix de récupération -->
+                                          <div class="d-flex justify-content-between mt-5" style="margin-left:20px;">
+                                            <div class="form-check pe-5">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiemenDepotBanque" value="depotBanque" required  onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}checked{% endif %}>
+                                              <label class="form-check-label ms-2" for="paiemenDepotBanque">
+                                                  Conservation auprès de BFM
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiementSurPlace" value="surPlace" required onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}checked{% endif %}>
+                                              <label class="form-check-label ms-2" for="paiementSurPlace">
+                                                  Retrait auprès de BFM
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiementUnTiers" value="tierce" required onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}checked{% endif %}>
+                                              <label class="form-check-label ms-2" for="paiementUnTiers">
+                                                  Retrait par un mandataire
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <!-- lieu de récupération -->
+                                          <div class="d-none" style="display:flex; justify-content:row;margin-left:20px;" id="lieuRecuperation">
+                                            <div style="margin-bottom : 25px; margin-right:70px !important;" class="mt-5">
+                                                <label class="label d-flex"><h6 style="color:#004877">Lieu de récupération</h6><span class="text-danger ps-2">*</span></label>
+                                                <select class="form-control" name="paiement[choixMeeting]" id="choice_recuperation"  onchange="toggleFields()" >
+                                                  {% for key, value in choiceMeeting %}
+                                                    <option value="{{ key }}" {% if key == app.user.preorder.choiceMeeting %}selected{% endif %}>{{ value }}</option>
+                                                  {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div id="recuperation_siege" class="d-none mt-5">
+                                                <label class="label d-flex"><h6 style="color:#004877">Nos 11 Représentations Térritoriales</h6><span class="text-danger ps-2">*</span></label>
+                                                <select class="form-control" name="paiement[userRT]" id="choice_rt">
+                                                  {% for key, value in userRT %}
+                                                    <option value="{{ key }}" {% if key == app.user.preorder.userRt %}selected{% endif %} >{{ value }}</option>
+                                                  {% endfor %}
+                                                </select>
+
+                                            </div>
+                                          </div>
+
+                                          <!-- identifiant tièrce -->
+                                          <div id="tiers_info" class="d-none" style="margin-left:20px;">
+                                            <div>
+                                              <label>Nom</label>
+                                              {% set nameTierceValue = app.user.preorder.nameTierce %}
+                                              <input type="text" class="form-control mt-2" name="paiement[nameTierce]" id="nameTierce" value="{{ nameTierceValue }}" {% if nameTierceValue != '' %}readonly{% endif %} />
+                                            </div>
+                                            <div>
+                                              <label>Prénom (s)</label>
+                                              {% set firstnameTierceValue = app.user.preorder.firstnameTierce %}
+                                              <input type="text" class="form-control mt-2." name="paiement[firstnameTierce]" id="firstnameTierce" value="{{ firstnameTierceValue }}" {% if firstnameTierceValue != '' %}readonly{% endif %} />
+                                            </div>
+                                            <div>
+                                              <label for="user_cin" class="form-label">CIN <span class="text-danger">*</span></label>
+                                              <div class="d-flex justify-content-between">
+                                                  <div class="cheque chequeGroup">
+                                                {% if cinTierceDigits is iterable %}
+                                                  {% for i in 0..11 %}
+                                                    {% set readonly = cinTierceDigits[i] is defined and cinTierceDigits[i] != '' ? 'readonly' : '' %}
+                                                    <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1 cinTierce" aria-label="false" name="paiement[cinTierce][]" value="{{ cinTierceDigits[i] is defined ? cinTierceDigits[i] : '' }}" {{ readonly }}>
+                                                  {% endfor %}
+                                                {% endif %}
+
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div style="margin-top:70px;">
+                                                <button class="btn pl-5 pr-5" style="background-color:#9f662e;color:white;" type="submit" id="proceder">Enregistrer</button>
+
+
+                                            {# <button class="btn pl-5 pr-5 " style="background-color:#9f662e;color:white;" type="submit" id="proceder">Enregistrer</button> #}
+                                        </div>
+
+                                      </form>
+                                  {% endif %}
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              <div>
+                  <div id="headingThree"></div>
+                  <div
+                  id="collapseThree"
+                  class="collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                  >
+
+                  </div>
+              </div>
+              <div>
+                <div id="headingFour"></div>
+                <div
+                id="collapseFour"
+                class="collapse"
+                aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample"
+                >
+
+                </div>
+              </div>
+
+        </div>
+      </div>
+
+      <div class="dashboardPaiement-mobile pb-0 mb-5">
+        <div class="dashboardPaiement-step">
+          <div class="step2" style="color:white;">2</div>
+          <h6 class="m-0">Paiement</h6>
+        </div>
+        {# <div>
+          <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;margin: 0 auto; margin-bottom:30px !important;" >
+              <div class="ml-5" style="margin-left:5px;display:flex;">
+                  <img src="{{ asset('img/important-note.png') }}"  class="pr-1" style="width: 15px; height: 15px;margin-top:5px;"/>
+                  <h5 style="margin-left:10px;font-size:1rem;">Votre paiement finalisera votre précommande</h5>
+              </div>
+
+              <div class="text-center">
+                  <h4 class="my-2" style="font-size:1rem;">Validité de la pré-commande :</h4>
+              </div>
+              <div class="countdown d-flex text-center justify-content-center">
+                    <div  id="days" class="d-flex flex-column me-3">
+                      <span class="countdown-number">0</span>
+                      <span>Jours</span>
+                    </div>
+                    <div  id="hours" class="d-flex flex-column me-3">
+                      <span class="countdown-number">0</span>
+                      <span>Heures</span>
+                    </div>
+                    <div  id="minutes" class="d-flex flex-column me-3">
+                      <span class="countdown-number">0</span>
+                      <span>Minutes</span>
+                    </div>
+                    <div  id="seconds" class="d-flex flex-column">
+                      <span class="countdown-number">0</span>
+                      <span>Secondes</span>
+                    </div>
+              </div>
+          </div>
+        </div> #}
+
+        <div class="card m-0 p-0">
+            <div class="accordion" id="accordionExample">
+              <div>
+                  <div id="headingTwo"></div>
+                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="row">
+                      <div class="col-12">
+                          <div class="card m-0 p-0">
+                              <div class="card-body">
+                                  {% if ordreVirement is not empty or cheque is not empty %}
+                                  <div class="pl-3 pb-3 pt-3 d-flex flex-column gap-4" style="background-color: #76ADD1;border-left: 5px solid #9f662e;margin: 0 auto; margin-bottom:30px !important;" >
+                                      <div class="ml-5" style="display: flex; margin-left:5px;" >
+                                          <h2 style="margin-left:10px;font-size:1.1rem;">Votre paiement est en cours de traitement</h2>
+                                      </div>
+                                      <h5 style="margin-left:20px;font-size:1.1rem; ">
+                                          {% if app.user.paymentMethod == 1 %}
+                                            Référence de l'ordre de virement : {{ app.user.preorder.ov }}
+                                          {% elseif app.user.paymentMethod == 2 %}
+                                              Numéro du chèque : {{ app.user.preorder.cheque_number }}
+                                          {% endif %}
+                                      </h5>
+                                      <h5 style="margin-left:20px;font-size:1.1rem;">
+                                          Mode de retrait :
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}Conservation auprès de BFM{% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait auprès de BFM - Siège{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait auprès de BFM - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                              {% if app.user.preorder.choiceMeeting == 1 %}Retrait par un mandataire - Siège{% elseif app.user.preorder.choiceMeeting == 2 %}
+                                                  {% for key, value in userRT %}
+                                                      {% if key == app.user.preorder.userRt %}Retrait par un mandataire - {{ value }}{% endif %}
+                                                  {% endfor %}
+                                              {% endif %}
+                                          {% endif %}
+                                      </h5>
+                                      {# <h5 style="margin-left:20px;font-size:1.1rem;">
+                                          Mandataire :
+                                          {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                              {{ app.user.preorder.nameTierce }} {{ app.user.preorder.firstnameTierce }} - {{ app.user.preorder.cinTierce }}
+                                          {% endif %}
+                                      </h5> #}
+                                      {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}
+                                            <h5 style="margin-left:20px;">
+                                              Mandataire : {{ app.user.preorder.nameTierce }} {{ app.user.preorder.firstnameTierce }} - {{ app.user.preorder.cinTierce }}
+                                            </h5>
+                                      {% endif %}
+                                  </div>
+                                  {% endif %}
+
+                                  {% if ordreVirement is empty and cheque is empty %}
+                                    <div class="pl-3 pb-3 pt-3" style="background-color: #76ADD1;border-left: 5px solid #9f662e;margin: 0 auto; margin-bottom:30px !important;" >
+                                        <div class="ml-5" style="margin-left:5px;display:flex;">
+                                            <img src="{{ asset('img/important-note.png') }}"  class="pr-1" style="width: 15px; height: 15px;margin-top:5px;"/>
+                                            <h5 style="margin-left:10px;font-size:1rem;">Votre paiement finalisera votre précommande</h5>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <h4 class="my-2" style="font-size:1rem;">Validité de la pré-commande :</h4>
+                                        </div>
+                                        <div class="countdown d-flex text-center justify-content-center">
+                                              <div  id="days" class="d-flex flex-column me-3">
+                                                <span class="countdown-number">0</span>
+                                                <span>Jours</span>
+                                              </div>
+                                              <div  id="hours" class="d-flex flex-column me-3">
+                                                <span class="countdown-number">0</span>
+                                                <span>Heures</span>
+                                              </div>
+                                              <div  id="minutes" class="d-flex flex-column me-3">
+                                                <span class="countdown-number">0</span>
+                                                <span>Minutes</span>
+                                              </div>
+                                              <div  id="seconds" class="d-flex flex-column">
+                                                <span class="countdown-number">0</span>
+                                                <span>Secondes</span>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <form name="paiement" id="paiementForm" method="POST" enctype="multipart/form-data" action="{{ path('dashboard_paiement') }}" >
+                                      <div>
+
+                                          <!-- paiement par cheque -->
+                                          <div class="chequeMobile mb-5">
+                                            <div style="color:#76ADD1;" class="my-4">
+                                                <span>Renseignements obligatoires:</span><br>
+                                                <span>Bénéficiaire: Banky Foiben'i Madagasikara</span><br>
+                                                <span>Montant (en chiffre et en lettre) : 12,000,000 Ariary</span><br>
+                                                <span>Date et lien d'émission</span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                              <div class="emetteur mb-4">
+                                                <h6 style="color:#004877">Emetteur</h6>
+                                                {# <input type="text" name="paiement[emetteur]" id="emetteur" class="form-control"   style="background-color:rgb(195,195,195);" > #}
+                                                <input type="text" name="paiement[emetteur]" id="emetteur" class="form-control" value="{{ app.user.name ~' ' ~ app.user.firstname }}" style="background-color:rgb(195,195,195);" readonly>
+
+                                              </div>
+                                              <div class="num-cheque">
+                                                <h6 style="color:#004877">N¤ du chèque</h6>
+                                                <div>
+                                                {# {% if chequeDigits is iterable %}
+                                                  {% for i in 0..9 %}
+                                                    {% set value = chequeDigits[i] is defined ? chequeDigits[i] : '' %}
+                                                    {% set readonly = value != '' ? 'readonly' : '' %}
+                                                    <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" name="paiement[cheque][]" class="user_cheque fc-1" aria-label="false" {% if app.user.paymentMethod == '2' %}required{% endif %} style="background-color:rgb(195,195,195);" value="{{ value }}" {{ readonly }}>
+                                                  {% endfor %}
+                                                {% endif %} #}
+                                                <input type="text" name="paiement[cheque]" id="paiement_chequeNumberMobile" class="form-control user_cheque" aria-label="false" {% if app.user.paymentMethod == '2' and app.user.preorder.cheque_number != '' %}readonly{% endif %} {% if app.user.paymentMethod == '2' %}required{% endif %} value="{{ app.user.preorder.cheque_number }}">
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- paiement par virement -->
+                                          <div class="virementMobile d-none mb-5">
+                                            <div style="color:#76ADD1;margin-left:20px;" class="mb-5">
+                                                <span>En faveur de Banky Foiben'i Madagasikara</span><br>
+                                                <span>Adresse: Lalana Revolisiona Sosialista Malagasy Antaninarenina-Antananarivo 101</span><br>
+                                                <span>Coordonnées bancaires : 00999 00140 00000343771 63</span><br>
+                                                <span>Motif: Votre référence dossier d'inscription (ex: OR2024P000XX)</span><br>
+                                                <div style="margin-top:20px;">
+                                                  <span style="color:#76ADD1;">Nous traiterons votre commande dès la réception du paiement</span>
+                                                </div>
+                                            </div>
+                                            <div style="margin-left:20px;">
+                                              <div class="mb-3">
+                                                <h6 style="color:#004877">Référence de l'ordre de virement</h6>
+                                                <input type="text" maxlength="23" name="paiement[ordreVirement]" id="paiement_ordreVirement" class="form-control" {% if app.user.paymentMethod == '1' and app.user.preorder.ov != '' %}readonly{% endif %} {% if app.user.paymentMethod == '1' %}required{% endif %} value="{{ app.user.preorder.ov }}">
+                                              </div>
+                                              <div>
+                                                <h6 for="file_ordreVirement" class="form-label" style="color:#004877 !important;">Télécharger votre fichier d'ordre de virement (Taille maximale: 2Mo) <span class="text-danger">*</span></h6>
+                                                <input type="file" accept="image/jpeg,image/png,application/pdf" name="paiement[fichierOrdreVirement]" id="paiement_fichierOrdreVirement" class="form-control" {% if app.user.paymentMethod == '1' %}required{% endif %} >
+                                              </div>
+                                            </div>
+                                          </div>
+
+
+
+                                          <!-- choix de récupération -->
+                                          <div class="d-flex flex-column gap-2 mt-5">
+                                            <div class="form-check pe-5">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiemenDepotBanqueMobile" value="depotBanque" required  onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_BANQUE %}checked{% endif %} >
+                                              <label class="form-check-label" for="paiemenDepotBanque">
+                                                  Conservation auprès de BFM
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiementSurPlaceMobile" value="surPlace" required onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_PLACE %}checked{% endif %}>
+                                              <label class="form-check-label" for="paiementSurPlace">
+                                                  Retrait auprès de BFM
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="paiement[choixRecuperation]" id="paiementUnTiersMobile" value="tierce" required onchange="toggleRadio()" {% if app.user.preorder.choiceLivraison == choices.USER_CHOICE_LIVRAISON_TIERCE %}checked{% endif %}>
+                                              <label class="form-check-label" for="paiementUnTiers">
+                                                  Retrait par un mandataire
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <!-- lieu de récupération -->
+                                          <div class="d-none" style="display:flex; flex-direction:column;" id="lieuRecuperationMobile">
+                                            <div style="margin-bottom : 15px;" class="mt-5">
+                                                <label class="label d-flex"><h6 style="color:#004877">Lieu de récupération</h6><span class="text-danger ps-2">*</span></label>
+                                                <select class="form-control" name="paiement[choixMeeting]" id="choice_recuperationMobile"  onchange="toggleFieldsMobile()" >
+                                                  {% for key, value in choiceMeeting %}
+                                                    <option value="{{ key }}" {% if key == app.user.preorder.choiceMeeting %}selected{% endif %}>{{ value }}</option>
+                                                  {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div id="recuperation_siegeMobile" class="d-none ">
+                                                <label class="label d-flex"><h6 style="color:#004877">Nos 11 Représentations Térritoriales</h6><span class="text-danger ps-2">*</span></label>
+                                                <select class="form-control" name="paiement[userRT]" id="choice_rtMobile">
+                                                  {% for key, value in userRT %}
+                                                    <option value="{{ key }}" {% if key == app.user.preorder.userRt %}selected{% endif %}>{{ value }}</option>
+                                                  {% endfor %}
+                                                </select>
+
+                                            </div>
+                                          </div>
+
+                                          <!-- identifiant tièrce -->
+                                          <div id="tiers_infoMobile" class="d-none">
+                                            <div>
+                                              <label>Nom</label>
+                                              {% set nameTierceValue = app.user.preorder.nameTierce %}
+                                              <input type="text" class="form-control" name="paiement[nameTierce]" id="nameTierceMobile" value="{{ nameTierceValue }}" {% if nameTierceValue != '' %}readonly{% endif %} />
+                                            </div>
+                                            <div class="my-4">
+                                              <label>Prénom</label>
+                                              {% set firstnameTierceValue = app.user.preorder.firstnameTierce %}
+                                              <input type="text" class="form-control" name="paiement[firstnameTierce]" id="firstnameTierceMobile" value="{{ firstnameTierceValue }}" {% if firstnameTierceValue != '' %}readonly{% endif %} />
+                                            </div>
+                                            <div>
+                                              <label for="user_cin" class="form-label">CIN <span class="text-danger">*</span></label>
+                                              <div class="d-flex justify-content-between">
+                                                  <div class="cheque chequeGroup">
+                                                  {% if cinTierceDigits is iterable %}
+                                                    {% for i in 0..11 %}
+                                                      {% set readonly = cinTierceDigits[i] is defined and cinTierceDigits[i] != '' ? 'readonly' : '' %}
+                                                      <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1 cinTierceMobile" aria-label="false" name="paiement[cinTierce][]" value="{{ cinTierceDigits[i] is defined ? cinTierceDigits[i] : '' }}" {{ readonly }}>
+                                                    {% endfor %}
+                                                  {% endif %}
+
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                        <div style="margin-top:70px;">
+                                           {% if ordreVirement is empty and cheque is empty %}
+                                                <button class="btn pl-5 pr-5" style="background-color:#9f662e;color:white;" type="submit" id="proceder">Enregistrer</button>
+                                            {% endif %}
+
+                                            {# <button class="btn pl-5 pr-5 " style="background-color:#9f662e;color:white;" type="submit" id="proceder">Enregistrer</button> #}
+                                        </div>
+
+                                      </form>
+                                    {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+
+              <div>
+                  <div id="headingThree"></div>
+                  <div
+                  id="collapseThree"
+                  class="collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                  >
+
+                  </div>
+              </div>
+              <div>
+                <div id="headingFour"></div>
+                <div
+                id="collapseFour"
+                class="collapse"
+                aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample"
+                >
+
+                </div>
+              </div>
+
+        </div>
+      </div>
+  </div>
+
+
+
+    </main><!-- End main -->
+
+      {{ include('front/_footer.html.twig') }}
+
+
+
+
+
+
+
+    <!-- Vendor JS Files -->
+
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('js/alert.js') }}"></script>
+    <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/bundle-bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery/dist/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap4.0.0.js') }}"></script>
+    <script src="{{ asset('js/jqueryCircular.js') }}"></script>
+    <script src="{{ asset('js/circle-progress.js') }}"></script>
+    <script src="{{ asset('js/dashboardPaiement.js') }}"></script>
+
+
+    <script>
+        console.log("{{ app.user.createdAt}}");
+
+        $(document).ready(function () {
+                {% for message in app.flashes('success') %}
+                    modalAlert('{{ message }}', 'success');
+                {% endfor %}
+
+                {% for message in app.flashes('error') %}
+                    modalAlert('{{ message }}', 'error');
+                {% endfor %}
+            });
+
+          function updateCountdown() {
+            // Divisez la chaîne createdAt en parties en utilisant les caractères "-", " " et ":" comme délimiteurs
+            var createdAtParts = '{{ app.user.createdAt|date("Y-m-d H:i:s") }}'.split(/[- :]/);
+
+            // Créez une nouvelle instance de Date avec les parties divisées
+            var startDate = new Date(createdAtParts[0], createdAtParts[1] - 1, createdAtParts[2], createdAtParts[3], createdAtParts[4], createdAtParts[5]).getTime();
+            var now = new Date().getTime();
+
+            // Calculer la date de fin du compte à rebours (7 jours après la date de début)
+            var endDate = new Date(startDate);
+            var targetDate = endDate.setDate(endDate.getDate() + 7);
+            var timeRemaining = targetDate - now;
+
+            // Vérifier si le compte à rebours est terminé
+            if (timeRemaining <= 0) {
+                updateCircle("days", 0, 0);
+                updateCircle("hours", 0, 0);
+                updateCircle("minutes", 0, 0);
+                updateCircle("seconds", 0, 0);
+                return; // Sortir de la fonction
+            }
+
+            var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            updateCircle("days", days / 7, days);
+            updateCircle("hours", hours / 24, hours);
+            updateCircle("minutes", minutes / 60, minutes);
+            updateCircle("seconds", seconds / 60, seconds);
+        }
+
+        function updateCircle(id, value, number) {
+            $('#' + id).circleProgress({
+                value: value,
+                animation: false,
+                fill: { gradient: ['#fff', '#fff'] }
+            });
+            $('#' + id + ' .countdown-number').text(number);
+        }
+
+        $(document).ready(function() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+
+        //get le type paiement de l'user
+         let typePaiement = "{{ app.user.paymentMethod }}";
+         let selectedChoiceMeetingValueFromDatabase = "{{ app.user.preorder.choiceMeeting }}";
+         let selectedChoiceRtValueFromDatabase = "{{ app.user.preorder.userRt }}";
+
+
+
+        if (typePaiement === "1"){
+          document.querySelector('.cheque').classList.add('d-none');
+          document.querySelector('.virement').classList.remove('d-none');
+        }
+        else if (typePaiement === "2"){
+          document.querySelector('.cheque').classList.remove('d-none');
+          document.querySelector('.virement').classList.add('d-none');
+        }
+
+        if (typePaiement === "1"){
+          document.querySelector('.chequeMobile').classList.add('d-none');
+          document.querySelector('.virementMobile').classList.remove('d-none');
+        }
+        else if (typePaiement === "2"){
+          document.querySelector('.chequeMobile').classList.remove('d-none');
+          document.querySelector('.virementMobile').classList.add('d-none');
+        }
+
+
+      if (selectedChoiceMeetingValueFromDatabase) {
+        let selectElementChoiceMeetingMobile = document.getElementById("choice_recuperationMobile");
+        let selectElementChoiceMeeting = document.getElementById("choice_recuperation");
+        let optionsMobile = selectElementChoiceMeetingMobile.options; // Utilisation de options, pas option
+        let options = selectElementChoiceMeeting.options; // Utilisation de options, pas option
+
+        for (let i = 0; i < optionsMobile.length; i++) {
+            let option = optionsMobile[i];
+            if (option.value !== selectedChoiceMeetingValueFromDatabase) {
+                option.disabled = true;
+            }
+        }
+        for (let i = 0; i < options.length; i++) {
+            let option = options[i];
+            if (option.value !== selectedChoiceMeetingValueFromDatabase) {
+                option.disabled = true;
+            }
+        }
+      }
+
+      if (selectedChoiceRtValueFromDatabase) {
+        let selectElementRtMobile = document.getElementById("choice_rtMobile");
+        let selectElementRt = document.getElementById("choice_rt");
+        let optionsMobile = selectElementRtMobile.options; // Utilisation de options, pas option
+        let options = selectElementRt.options; // Utilisation de options, pas option
+
+        for (let i = 0; i < optionsMobile.length; i++) {
+            let option = optionsMobile[i];
+            if (option.value !== selectedChoiceRtValueFromDatabase) {
+                option.disabled = true;
+            }
+        }
+        for (let i = 0; i < options.length; i++) {
+            let option = options[i];
+            if (option.value !== selectedChoiceRtValueFromDatabase) {
+                option.disabled = true;
+            }
+        }
+      }
+
+
+
+        //l'envoi de formulaire
+        document.getElementById("paiementForm").addEventListener("submit", function(event) {
+        // Assurez-vous que le formulaire est soumis avec la méthode POST
+
+
+        if (this.method.toUpperCase() !== 'POST') {
+
+            console.error('La méthode de la requête n\'est pas POST.');
+            return;
+
+
+        }
+
+        // Empêchez la soumission normale du formulaire
+
+        let formData = new FormData(this);
+
+        // Envoie les données du formulaire via AJAX
+          fetch("{{ path('dashboard_paiement') }}", {
+          method: "POST",
+          body: formData // Utilisez FormData pour récupérer les données du formulaire multipart
+        })
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error('Une erreur est survenue lors de la requête.');
+
+            }
+
+
+
+          })
+        .catch(error => {
+            // Affichez l'erreur dans la console
+            console.error('Erreur:', error);
+            // Affichez un message d'erreur à l'utilisateur ou prenez d'autres mesures nécessaires
+        });
+      });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

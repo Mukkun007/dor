@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row mb-5">
+            <div class="offset-1 col-10">
+                <h2 class="text-gold">Authentification</h2>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12">
+
+                <form action="{{ path('app_login') }}" method="post">
+
+                    <div class="row mt-3">
+                        <div class="offset-1 col-10">
+                            <label for="username" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi-envelope-fill"></i></span>
+                                <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}">
+                            </div>
+                           
+                        </div>
+                        <div class="offset-1 col-10 mt-5">
+                            <label for="password" class="form-label">Mot de passe</label>
+                             <div class="input-group">
+                                 <span class="input-group-text"><i class="bi-lock-fill"></i></span>
+                                 <input type="password" id="password" name="_password" class="form-control">
+                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            </div>
+                        </div>
+                        <div style="text-align:center" class="mt-5">
+                            <button class="btn btn-primary pl-5 pr-5" style="width:50%;">Connecter</button>
+                        </div>
+                    </div>
+            
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

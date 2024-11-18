@@ -1,0 +1,251 @@
+<div class="row mb-5">
+    <div class="col-12">
+
+        {% for flash_message in app.flashes('success') %}
+            <div class="alert alert-success my-5" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+
+        <form id="userForm" name="user" method="post" enctype="multipart/form-data" action="{{ path('update_user') }}">
+            <div>
+                <h4>A propos</h4>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-2">
+                    <label for="user_civility" class="form-label">Civilité</label>
+                    <select id="user_civility" class="form-control">
+                        {% for key, value in civilityOptions %}
+                            <option value="{{ key }}" {% if key == app.user.civility %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="user_maritalStatus" class="form-label">Situation familiale</label>
+                    <select id="user_maritalStatus" class="form-control">
+                        {% for key, value in maritalStatusOptions %}
+                            <option value="{{ key }}" {% if key == app.user.maritalStatus %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="user_name" class="form-label">Nom <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="50" name="user[name]" id="user_name" class="form-control" value="{{ app.user.name }}" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="user_firstname" class="form-label">Prénom(s) <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="50" name="user[firstname]" id="user_firstname" class="form-control" value="{{app.user.firstname }}" required>
+                </div>
+
+                <div class="col-lg-4 passport d-none mt-3">
+                    <label for="user_passport" class="form-label">Passeport <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="23" name="user[passport]" id="user_passport" class="form-control" value="{{app.user.passport}}">
+                </div>
+                <div class="col-lg-4 passportExp d-none mt-3">
+                    <label for="user_passportExp" class="form-label">Date d'expiration <span class="text-danger">*</span></label>
+                    <input type="date" name="user[passportExp]" id="user_passportExp" class="form-control" value="{{ _passportExp }}">
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_birthday" class="form-label">Date de naissance</label>
+                    <input type="date" id="user_birthday" class="form-control" value="{{_birthday}}" readonly>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_address" class="form-label">Adresse <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="50" name="user[address]" id="user_address" class="form-control" value="{{ app.user.address }}" required>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_city" class="form-label">Ville <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="20" name="user[city]" id="user_city" class="form-control" value="{{ app.user.city}}" required>
+                </div>
+
+                {# <div class="col-lg-8 cin mt-3">
+                    <label for="user_cin" class="form-label">CIN <span class="text-danger">*</span></label>
+                    <div class="d-flex justify-content-between">
+                        <div class="cin">
+                          {% for cinDigit in cinDigits %}
+                              <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" value="{{ cinDigit }}" class="user_cin fc-1" aria-label="false" readonly>
+                          {% endfor %}
+                        </div>
+                    </div>
+                </div> #}
+
+                <div class="col-lg-4 cin mt-3">
+                    <label for="user_cin" class="form-label">CIN ou Passeport ou Carte de résident <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" value="{{ app.user.cin }}" readonly>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <label for="user_phone" class="form-label">Numéro de téléphone <span class="text-danger">*</span></label>
+                    <input type="text" placeholder="03x xx xxx xx" inputmode="numeric" pattern="\d*" maxlength="15" name="user[phone]" id="user_phone" class="form-control" value="{{ app.user.phone}}" required>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <label for="user_email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" maxlength="50" name="user[email]" id="user_email" class="form-control" value="{{ app.user.email }}" required>
+                    <div id="email-requirements" class="text-danger pt-1" style="color: #cd8801 !important; font-weight: bold">
+                        Cette adresse sera utilisée pour toutes vos correspondances avec BFM. Veuillez assurer l'exactitude de l'adresse communiquée.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-2 mt-3">
+                    <label for="user_or_quantity" class="form-label">Quantité de pièces d'or <span class="text-danger">*</span></label>
+                    <select name="user[orQuantity]" id="user_or_quantity" class="form-control" required>
+                        {% for i in 1..50 %}
+                            <option value="{{ i }}"{% if i == app.user.orQuantity %}selected{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2 mt-3">
+                    <label for="user_prix_total" class="form-label">Prix total</label>
+                    <div class="input-group">
+                        <div id="user_prix_total" class="form-control"></div>
+                        <span class="input-group-text">Ar</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 mt-3">
+                    <label for="user_account" class="form-label">Compte <span class="text-danger">*</span></label>
+                    <select name="user[account]" id="user_account" class="form-control" required>
+                        {% for key, value in accountOptions %}
+                            <option value="{{ key }}" {% if key == app.user.account %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_paiementOptions" class="form-label">Mode de paiement <span class="text-danger">*</span></label>
+                    <div class="d-flex paiementOptions mt-2">
+                        <div class="form-check pe-5">
+                            <input class="form-check-input" type="radio" name="user[typePaiement]" id="paiementVirement" value="virement"  {% if paymentMethod == '1' %}checked{% endif %}>
+                            <label class="form-check-label" for="paiementVirement">
+                                Par virement
+                            </label>
+                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="user[typePaiement]" id="paiementCheque" value="cheque" {% if paymentMethod == '2' %}checked{% endif %}>
+                            <label class="form-check-label" for="paiementCheque">
+                                Par chèque
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 rib ribGroup mt-3 d-none">
+                    <label for="user_rib" class="form-label">RIB <span class="text-danger">*</span></label>
+                    <div class="bank-info"></div>
+                    <div class="rib d-inline-block d-lg-flex gap-1">
+                       
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[0] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[1] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[2] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[3] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[4] : '' }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[5] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[6] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[7] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[8] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[9] : '' }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[10] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[11] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[12] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[13] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[14] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[15] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[16] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[17] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[18] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[19] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[20] : '' }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[21] : '' }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ ribDigits and ribDigits is iterable ? ribDigits[22] : '' }}">
+                        
+                    </div>
+                    <input type="hidden" name="user[rib]" class="form-control all-rib-hidden" value="{{ rib }}">
+                </div>
+                <div class="col-lg-4 affiliation mt-3 d-none">
+                    <label for="user_affiliation" class="form-label">Numéro d'affiliation <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="50" name="user[affiliation]" id="user_affiliation" class="form-control" value="{{app.user.affiliation}}" >
+                </div>
+                <div class="col-lg-4 iban mt-3 d-none">
+                    <label for="user_iban" class="form-label">IBAN <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="33" name="user[iban]" id="user_iban" class="form-control" value="{{app.user.iban}}" >
+                </div>
+                <div class="col-lg-4 mt-3 swift d-none">
+                    <label for="user_swift" class="form-label">SWIFT <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="11" name="user[swift]" id="user_swift" class="form-control" value="{{app.user.swift}}" >
+                </div>
+            </div>
+
+            <h4 class="mt-5">Pièces justificatives <small class="text-grey">(pdf, jpeg, png)</small></h4>
+
+            <div class="row">
+               <div class="col-lg-4 m-0 mt-3">
+                    <div class="col-12 cin cinFile d-none">
+                        <label for="user_cinFile" class="form-label">Télécharger votre CIN Recto verso dans un même fichier<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[cinFile]" id="user_cinFile" class="form-control" value={{ fileCin|split('/')|last }} >
+                    </div>
+                   {% if app.user.passport == null and app.user.passportExp == null %}
+                       <div class="col-12 cin cinFile mt-5 d-none">
+                           <embed src="{{ app.user.fileCin|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                       </div>
+                   {% endif %}
+                    <div class="col-12 passport passportFile d-none">
+                        <label for="user_passportFile" class="form-label">Télécharger votre passeport<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[passportFile]" id="user_passportFile" class="form-control" value={{ filePassport|split('/')|last }} >
+                    </div>
+                   {% if app.user.passport != null and app.user.passportExp != null %}
+                       <div class="col-12 passport passportFile mt-5 d-none">
+                           <embed src="{{ app.user.filePassport|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                       </div>
+                   {% endif %}
+                </div>
+               <div class="col-lg-4 m-0 mt-3"></div>
+               <div class="col-lg-4 m-0 mt-3">
+                    <div class="col-12 rib ribFile d-none">
+                        <label for="user_ribFile" class="form-label">Télécharger votre RIB<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf"  name="user[ribFile]" id="user_ribFile" class="form-control" value={{ fileRib|split('/')|last }} >
+                    </div>
+                   {% if app.user.rib != null %}
+                       <div class="col-12 rib ribFile mt-5 d-none">
+                           <embed src="{{ app.user.fileRib|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                       </div>
+                   {% endif %}
+                    <div class="col-12 affiliation affiliationFile d-none">
+                        <label for="user_affiliationFile" class="form-label">Télécharger votre attestation d'affiliation<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf"  name="user[affiliationFile]" id="user_affiliationFile" class="form-control" value={{ fileAffiliation|split('/')|last }}  >
+                    </div>
+                   {% if app.user.affiliation != null %}
+                       <div class="col-12 affiliation affiliationFile mt-5 d-none">
+                        <embed src="{{ app.user.fileAffiliation|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                       </div>
+                   {% endif %}
+                    <div class="col-12 iban ibanFile d-none">
+                        <label for="user_ibanFile" class="form-label">Télécharger votre IBAN-SWIFT<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf"  name="user[ibanFile]" id="user_ibanFile" class="form-control" value={{ fileIban|split('/')|last }} >
+                    </div>
+                   {% if app.user.iban != null %}
+                       <div class="col-12 iban ibanFile mt-5 d-none">
+                            <embed src="{{ app.user.fileIban|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                       </div>
+                   {% endif %}
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                    <button class="btn btn btn-preorder" type="submit">Enregistrer la modification</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

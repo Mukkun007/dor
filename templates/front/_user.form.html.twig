@@ -1,0 +1,259 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-gold formulaire-inscription">Formulaire d'inscription</h2>
+        <small class="text-grey">Les champs suivis d'un <span class="text-danger">*</span> sont obligatoires</small>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12">
+
+        <form id="userForm" name="user" method="post" enctype="multipart/form-data">
+            {{ form_row(form._token) }}
+
+            <h4>A propos</h4>
+
+            <div class="row mt-3 signup">
+                <div class="col-lg-2">
+                    <label for="user_civility" class="form-label mt-3">Civilité</label>
+                    <select name="user[civility]" id="user_civility" class="form-control">
+                        {% for key, value in civility %}
+                            <option value="{{ key }}"{% if key == form.vars.value.name %} selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="user_maritalStatus" class="form-label mt-3">Situation familiale</label>
+                    <select name="user[maritalStatus]" id="user_maritalStatus" class="form-control">
+                        {% for key, value in marital_status %}
+                            <option value="{{ key }}"{% if key == form.vars.value.maritalStatus %} selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="user_name" class="form-label mt-3">Nom <span class="text-danger">*</span></label>
+                    <input type="text" name="user[name]" maxlength="50" id="user_name" class="form-control" value="{{ form.vars.value.name }}" required>
+                </div>
+                <div class="col-lg-4">
+                    <label for="user_firstname" class="form-label mt-3">Prénom(s) <span class="text-danger">*</span></label>
+                    <input type="text" name="user[firstname]" maxlength="50" id="user_firstname" class="form-control" value="{{ form.vars.value.firstname }}" required>
+                </div>
+                {% if nationality is not null and nationality.value == '1' %}
+                    <div class="col-lg-4 mt-3">
+                        <label for="user_nationality" class="form-label">Nationalité <span class="text-danger">*</span></label>
+                        <select name="user[nationality]" id="user_nationality" class="form-control" required>
+                            <option value="0"{% if _nationality == 0 %} selected{% endif %}>Malagasy</option>
+                            <option value="1"{% if _nationality == 1 %} selected{% endif %}>Autres</option>
+                        </select>
+                    </div>
+                {% endif %}
+                <div class="col-lg-4 passport {% if _nationality == 0 %} d-none {% endif %} mt-3">
+                    <label for="user_passport" class="form-label">Passeport <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="23" name="user[passport]" id="user_passport" class="form-control" value="{{ _passport }}" {% if _nationality == 1 %} required {% endif %}>
+                </div>
+                <div class="col-lg-4 passport {% if _nationality == 0 %} d-none {% endif %} mt-3">
+                    <label for="user_passportExp" class="form-label">Date d'expiration <span class="text-danger">*</span></label>
+                    {# <input type="date" name="user[passportExp]" id="user_passportExp" class="form-control" value="{{ _passportExp }}" {% if _nationality == 1 %} required {% endif %}> #}
+                    <input type="text" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" name="user[passportExp]" id="user_passportExp" class="form-control" value="{{ _passportExp }}" {% if _nationality == 1 %} required {% endif %}>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_birthday" class="form-label">Date de naissance</label>
+                    {# <input type="date" name="user[birthday]" id="user_birthday" class="form-control" value="{{ form.vars.value.birthday }}" required > #}
+                    <input type="text" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" name="user[birthday]" id="user_birthday" class="form-control" value="{{ form.vars.value.birthday }}">
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_address" class="form-label">Adresse <span class="text-danger">*</span></label>
+                    <input type="text" name="user[address]" maxlength="50" id="user_address" class="form-control" value="{{ form.vars.value.address }}" required>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_city" class="form-label">Ville <span class="text-danger">*</span></label>
+                    <input type="text" name="user[city]" maxlength="20" id="user_city" class="form-control" value="{{ form.vars.value.city }}" required>
+                </div>
+                {# <div class="col-lg-4 cin {% if _nationality == 1 %} d-none {% endif %} mt-3"> #}
+                <div class="col-lg-4 cin  mt-3">
+                    <label for="user_cin" class="form-label">CIN ou Passeport ou Carte de résident <span class="text-danger">*</span></label>
+                    {# <div class="d-flex justify-content-between">
+                        <div class="cin cinGroup">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin0 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin1 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin2 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin3 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin4 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin5 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin6 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin7 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin8 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin9 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin10 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_cin fc-1" aria-label="false" value="{{ _cin11 }}">
+                        </div>
+                    </div> #}
+                    {# <input type="hidden" name="user[cin]" class="form-control cin-hidden" {% if _nationality == 0 %} required {% endif %} value="{{ _cin }}"> #}
+                    <input type="text" name="user[cin]" class="form-control" required  value="{{ _cin }}">
+                </div>
+                {# {% if nationality is not null and nationality.value == '1' %} #}
+                    <div class="col-lg-4 country mt-3">
+                        <label for="user_country" class="form-label">Pays <span class="text-danger">*</span></label>
+                        <select name="user[country]" id="user_country" class="form-control" required>
+                            <option value=""{% if _country == '' %} selected{% endif %}>Choisir un pays</option>
+                            {% for country in countries %}
+                            
+                                    <option value="{{ country.id }}"{% if _country == country.id or country.id == 137 %} selected{% endif %}>{{ country.libelle }}</option>
+                               
+                            {% endfor %}
+                        </select>
+                    </div>
+                {# {% endif %} #}
+                <div class="col-lg-4 mt-3">
+                    <label for="user_phone" class="form-label">Numéro de téléphone <span class="text-danger">*</span></label>
+                    <input type="text" placeholder="03x xx xxx xx" inputmode="numeric" pattern="\d*" maxlength="15" name="user[phone]" id="user_phone" class="form-control" value="{{ form.vars.value.phone }}" required>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" name="user[email]" maxlength="50" id="user_email" class="form-control" value="{{ form.vars.value.email }}" required>
+                    <div id="email-requirements" class="text-danger pt-1" style="color: #cd8801 !important; font-weight: bold;">
+                        Cette adresse sera utilisée pour toutes vos correspondances avec BFM. Veuillez assurer l'exactitude de l'adresse communiquée.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-2 mt-3">
+                    <label for="user_or_quantity" class="form-label">Quantité de pièces d'or <span class="text-danger">*</span></label>
+                    <select name="user[orQuantity]" id="user_or_quantity" class="form-control" required>
+                        {% for i in 1..50 %}
+                            <option value="{{ i }}"{% if i == 1 %} selected{% endif %}>{{ i }}</option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2 mt-3">
+                    <label for="user_prix_total" class="form-label">Prix total</label>
+                    <div class="input-group">
+                        <div id="user_prix_total" class="form-control"></div>
+                        <span class="input-group-text">Ar</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row d-flex">
+                <div class="col-lg-4 mt-3">
+                    <label for="user_account" class="form-label">Compte <span class="text-danger">*</span></label>
+                    <select name="user[account]" id="user_account" class="form-control" required>
+                        {% for key, value in account %}
+                            <option value="{{ key }}"{% if key == form.vars.value.account %} selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-4 mt-3">
+                    <label for="user_paiementOptions" class="form-label">Mode de paiement <span class="text-danger">*</span></label>
+                    <div class="d-flex paiementOptions mt-2">
+                        <div class="form-check pe-5">
+                            <input class="form-check-input" type="radio" name="user[typePaiement]" id="paiementVirement" value="virement" checked>
+                            <label class="form-check-label" for="paiementVirement">
+                                Par virement
+                            </label>
+                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="user[typePaiement]" id="paiementCheque" value="cheque">
+                            <label class="form-check-label" for="paiementCheque">
+                                Par chèque
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 rib ribGroup {% if form.vars.value.account is null or form.vars.value.account is empty or form.vars.value.account == 1 %} d-block {% elseif form.vars.value.account != 1 %} d-none {% endif %} mt-3">
+                    <label for="user_rib" class="form-label">RIB <span class="text-danger">*</span></label>
+                    <div class="bank-info"></div>
+                    {# <div class="rib d-flex gap-4 flex-wrap"> #}
+                    <div class="rib d-inline-block d-lg-flex gap-1">
+                        
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib0 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib1 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib2 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib3 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ _rib4 }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib5 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib6 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib7 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib8 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ _rib9 }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib10 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib11 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib12 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib13 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib14 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib15 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 mt-1 mt-lg-0" aria-label="false" value="{{ _rib16 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 mt-1 mt-lg-0" aria-label="false" value="{{ _rib17 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 mt-1 mt-lg-0" aria-label="false" value="{{ _rib18 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 mt-1 mt-lg-0" aria-label="false" value="{{ _rib19 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 mt-1 mt-lg-0 me-lg-3" aria-label="false" value="{{ _rib20 }}">
+                            <div class="d-block d-lg-block empty-div"></div>
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 " aria-label="false" value="{{ _rib21 }}">
+                            <input type="text" inputmode="numeric" pattern="\d*" maxlength="1" class="user_rib fc-1 me-lg-3" aria-label="false" value="{{ _rib22 }}">
+                        
+                    </div>
+                    <input type="hidden" name="user[rib]" class="form-control all-rib-hidden" value="{{ _rib }}" {% if form.vars.value.account == 1 or form.vars.value.account is null or form.vars.value.account is empty %} required {% endif %}>
+                </div>
+                <div class="col-lg-6 affiliation {% if form.vars.value.account != 2 %} d-none {% endif %} mt-3">
+                    <label for="user_affiliation" class="form-label">Numéro d'affiliation <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="50" name="user[affiliation]" id="user_affiliation" class="form-control" value="{{ _affiliation }}" {% if form.vars.value.account == 2 %} required {% endif %}>
+                </div>
+                <div class="col-lg-6 iban {% if form.vars.value.account != 3 %} d-none {% endif %} mt-3">
+                    <label for="user_iban" class="form-label">IBAN <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="33" name="user[iban]" id="user_iban" class="form-control" value="{{ _iban }}" {% if form.vars.value.account == 3 %} required {% endif %}>
+                </div>
+                <div class="col-lg-6 iban {% if form.vars.value.account != 3 %} d-none {% endif %} mt-3">
+                    <label for="user_swift" class="form-label">SWIFT <span class="text-danger">*</span></label>
+                    <input type="text" maxlength="11" name="user[swift]" id="user_swift" class="form-control" value="{{ _swift }}" {% if form.vars.value.account == 3 %} required {% endif %}>
+                </div>
+            </div>
+
+            <h4 class="mt-5">Pièces justificatives <small class="text-grey">(pdf, jpeg, png)</small></h4>
+
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="col-12 cin {% if _nationality == 1 %} d-none {% endif %}">
+                            <label for="user_cinFile" class="form-label">Télécharger votre CIN Recto verso dans un même fichier<br/>(Taille maximale : 2Mo)<span class="text-danger">*</span></label>
+                            <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[cinFile]" id="user_cinFile" class="form-control" {% if _nationality == 0 %} required {% endif %}>
+                        </div>
+                        <div class="col-12 passport {% if _nationality == 0 %} d-none {% endif %}">
+                            <label for="user_passportFile" class="form-label">Télécharger votre Passeport<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                            <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[passportFile]" id="user_passportFile" class="form-control" {% if _nationality == 1 %} required {% endif %}>
+                        </div>
+                    </div>
+                    <div id="fileErrorMessage" class="text-danger mt-2" style="display: none;font-size:12px;"></div>
+                </div>
+                <div class="offset-lg-2 col-lg-5">
+                    <div class="col-12 rib {% if form.vars.value.account is null or form.vars.value.account is empty or form.vars.value.account == 1 %} d-block {% elseif form.vars.value.account != 1 %} d-none {% endif %}">
+                        <label for="user_ribFile" class="form-label">Télécharger votre RIB<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[ribFile]" id="user_ribFile" class="form-control"{% if form.vars.value.account == 1 or form.vars.value.account is null or form.vars.value.account is empty %} required {% endif %}>
+                    </div>
+                    <div class="col-12 affiliation {% if form.vars.value.account != 2 %} d-none {% endif %}">
+                        <label for="user_affiliationFile" class="form-label">Télécharger votre attestation d'affiliation<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[affiliationFile]" id="user_affiliationFile" class="form-control" {% if form.vars.value.account == 2 %} required {% endif %}>
+                    </div>
+                    <div class="col-12 iban {% if form.vars.value.account != 3 %} d-none {% endif %}">
+                        <label for="user_ibanFile" class="form-label">Télécharger votre IBAN-SWIFT<br/>(Taille maximale : 2Mo) <span class="text-danger">*</span></label>
+                        <input type="file" accept="image/jpeg,image/png,application/pdf" name="user[ibanFile]" id="user_ibanFile" class="form-control" {% if form.vars.value.account == 3 %} required {% endif %}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12 text-end">
+                    <button class="btn btn btn-preorder" type="submit">Valider</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+

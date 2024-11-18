@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Or{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Or</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Liste</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <div class="d-inline-flex mb-4">
+
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable-export">
+                            <thead>
+                                <tr>
+                                    <th class="export">Numéro de série</th>
+                                    <th class="export searchPane">Etat</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="export searchPane">Date d'attribution</th>
+                                    <th class="export">Précommande</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for or_stock in orStock %}
+                                    <tr>
+                                        <td>{{ or_stock.ref }}</td>
+                                        <td>{{ or_stock.estVendu == 1 ? 'Vendu' : 'En stock' }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ or_stock.dateVente ? or_stock.dateVente|date('d/m/Y') : '' }}</td>
+                                        <td>{{ or_stock.estVendu == 1 and or_stock.preOrder is not null ? or_stock.preOrder.reference : '' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

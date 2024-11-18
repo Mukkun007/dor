@@ -1,0 +1,100 @@
+<div class="d-flex align-items-end mb-5">
+    <div class="login-wrapper-logo">
+        <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="img-fluid" style="width: 200px"></a>
+    </div>
+    <div style="color:grey;width:100%;" class="text-center"><h1 class="text-center mb-5">ACCUSE DE RECEPTION</h1></div>
+</div>
+<div  class="d-flex justify-content-between mb-3">
+    <div style="color:#004877;">
+        <span>BANKY FOIBEN'I MADAGASIKARA</span><br />
+        <span>Lalana Revolisiona Sosialista Malagasy Antaninarenina</span><br />
+        <span>Antananarivo 101 - Madagasikara</span><br />
+        <span>(261) 20 22 217 51</span><br />
+        <span>banky-foibe@bfm.mg</span><br />
+        <span>BFM Antaninarenina</span>
+    </div>
+    <div>
+        <div>
+            <div style="background:#418ab3;" class="p-1">
+                <h6 class="text-center pe-3 ps-3" style="color:#fff;">DATE</h6>
+            </div>
+            <span id="currentDate" style="color:black;display:block; width:100%;" class="text-center">{{ "now"|date("d/m/Y") }}</span>
+        </div>
+        <div>
+            <div style="background-color:#418ab3;" class="p-1">
+                <h6 class="text-center pe-3 ps-3" style="color:#fff;">ACCUSE DE RECEPTION N°</h6>
+            </div>
+            <span style="color:black;display:block; width:100%;" class="text-center">{{ order.user.reference }}</span>
+        </div>
+        <div>
+            <div style="background-color:#418ab3;" class="p-1">
+                <h6 class="text-center pe-3 ps-3" style="color:#fff;">REFERENCE DE PRECOMMANDE</h6>
+            </div>
+            <span style="color:black;display:block; width:100%;" class="text-center">{{ order.user.reference }}</span>
+        </div>
+    </div>
+</div>
+<div class="d-flex gap-5 justify-content-between mb-5">
+    <div style="width:100%;">
+        <div style="background-color:#418ab3;" class="p-1"><h6 class="text-center" style="color:#fff;">Désignation</h6></div>
+        <div style="color:black;">
+            <span>Pièces de monnaie en or commémorative de 50 Ariary</span>
+        </div>
+    </div>
+    <div style="width:100%;">
+        <div style="background-color:#418ab3;" class="p-1"><h6 class="text-center" style="color:#fff;">Numéro de série</h6></div>
+        <div style="color:black;" class="d-flex justify-content-between">
+            <span>{{ order.orStock is not null ? order.orStock.ref : '' }}</span>
+        </div>
+    </div>
+</div>
+{% if order.choiceLivraison == 3 %}
+    <div>
+        <div style="width:100%;">
+            <div style="background-color:#418ab3;" class="p-1"><h6 class="text-center" style="color:#fff;">MANDATAIRE</h6></div>
+            <div class="d-flex justify-content-between">
+                <div style="color:black;" class="d-flex flex-column">
+                    {% if order.tierceCivility is not empty %}
+                        <span>{{ civility[order.tierceCivility] }} {{ order.nameTierce }} {{ order.firstnameTierce }}</span>
+                    {% else %}
+                        <span>{{ order.nameTierce }} {{ order.firstnameTierce }}</span>
+                    {% endif %}
+                    <span>Née le : {{ order.tierceBirthday }} à {{ order.tierceAddress }}</span>
+                    <span>N° CIN : {{ order.cinTierce }}</span>
+                    {% if order.tierceDuplicata is not empty %}
+                        <span>Duplicata du : {{ order.tierceDuplicata }}</span>
+                    {% endif %}
+                    <span>Numéro tel : {{ order.tiercePhone }}</span>
+                </div>
+                <div>
+                    <span>Agissant pour le compte de l'acquéreur</span><br />
+                    <span>Suivant procuration en date du :</span><br />
+                    <span>Code de sécurité : {{ order.otp }}</span><br />
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endif %}
+<div class="d-flex gap-5 justify-content-between mb-5">
+    <div style="width:100%;">
+        <div style="background-color:#418ab3;" class="p-1"><h6 class="text-center" style="color:#fff;">ACQUEREUR</h6></div>
+        <div style="color:black;" class="d-flex justify-content-between">
+            <div>
+                <span>{{ civility[order.user.civility] }} {{ order.user.name }} {{ order.user.firstname }}</span><br />
+                <span>{{ order.user.address }}</span>
+            </div>
+            <div>
+                <span>{{ order.user.email }}</span><br />
+                <span>{{ order.user.phone }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex gap-5 justify-content-between mb-5">
+    <div style="width:100%;"></div>
+    <div style="background:#418ab3;width:100%;" class="p-1">
+        <h6 class="text-center pe-3 ps-3" style="color:#fff;">{% if order.choiceLivraison == 3 %}LE MANDATAIRE{% else %}L'ACQUEREUR{% endif %}</h6>
+    </div>
+</div>
+<div>Par le présent, BFM est entièrement dégagée de toutes responsabilités relatives à la pièce référencée ci-haut.</div>

@@ -1,0 +1,27 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Groupes{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Groupes</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_group_index') }}">Groupes</a></li>
+                <li class="breadcrumb-item active">Ajout</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="d-inline-flex mb-4">
+        <a href="{{ path('admin_group_index') }}" class="btn btn-sm btn-secondary me-2">Retour à la liste</a>
+    </div>
+
+    <section class="section">
+
+        {{ include('admin/group/_form.html.twig') }}
+
+    </section>
+
+{% endblock %}

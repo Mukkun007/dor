@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Utilisateurs</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Utilisateurs</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="d-inline-flex mb-4">
+        <a href="{{ path('admin_user_new') }}" class="btn btn-sm btn-primary me-2">Ajouter un utilisateur</a>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénoms</th>
+                                    <th>Email</th>
+                                    <th>Groupe</th>
+                                    <th>Mot de passe</th>
+                                    <th>Date d’ajout</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users|filter(user => user.id != 1) %}
+                                    <tr>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.firstname }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.group is not null ? user.group.libelle : '-' }}</td>
+                                        <td>{{ user.plainPassword }}</td>
+                                        <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

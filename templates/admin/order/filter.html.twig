@@ -1,0 +1,79 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Pr&eacutecommandes{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Pr&eacutecommandes => Stocks du {{ "now"|date("d/m/Y") }} : {{ actuel }} / {{ initial }}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Pr&eacutecommandes</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <div class="d-inline-flex mb-4">
+
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>R&eacute;f&eacute;rence</th>
+                                    <th>N° série</th>
+                                    <th>Nom & prénom</th>
+                                    <th>Date d'insertion</th>
+                                    <th>Date de modification</th>
+                                    <th>Statut</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    {% if user.preorder is not null and user.preorder.orStock is not null and user.age < 30 and user.preorder.deleted == '0' and user.preorder.flagStatus != cancel and user.preorder.flagStatus != validate %}
+                                        <tr>
+                                            <td><input class="checkbox form-check-input" type="checkbox" value = "{{ user.preorder.id }}" id="id_{{ user.preorder.id }}"</td>
+                                            <td>{{ user.preorder.reference }}</td>
+                                            <td>{{ user.preorder.orStock.ref }}</td>
+                                            <td>{{ user.firstname }}  {{ user.name }}</td>
+                                            <td>{{ user.preorder.createdAt ? user.preorder.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+                                            <td>{{ user.preorder.updatedAt ? user.preorder.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
+                                            <td>{{ constant[user.preorder.flagStatus] }}</td>
+                                            <td style="text-align:center" >
+                                                <a href="{{ path('admin_app_order_show', {'id': user.preorder.id }) }}" class="btn btn-sm btn-secondary">détails</a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {# <form <#class="form-group" method="POST" action="{{ path('admin_app_order_validateMulti') }}"> #}
+                            <button id="recupererValeurs" class="btn btn-primary">Valider précommande</button>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/checbox.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            launchAjax("{{ path('admin_app_order_validateMulti') }}", "{{ path('admin_app_order_filter') }}");
+        });
+    </script>
+
+{% endblock %}

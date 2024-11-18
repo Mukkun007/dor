@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Paiements{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Rapprochement</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Virements</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable-export">
+                            <thead>
+                                <tr>
+                                    <th class="export">#</th>
+                                    <th class="export">Numéro dossier</th>
+                                    <th>Nom</th>
+                                    <th>Prénoms</th>
+                                    <th class="export">Nom & prénoms</th>
+                                    <th class="export searchPane">Etat après compensation</th>
+                                    <th class="export searchPane">Date compensation</th>
+                                    <th class="export searchPane">Etat après rapprochement</th>
+                                    <th class="export">Date traitement</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transfer in transfers %}
+                                    {{ render(controller('App\\Controller\\SecurityController::row', {'id': transfer.id})) }}
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="d-flex justify-content-center me-5"><div class="me-1" style="width: 20px; height: 20px; border: 1px solid #000000;"></div>Référence valide</div>
+                                            <div class="d-flex justify-content-center"><div class="bg-danger me-1" style="width: 20px; height: 20px;"></div>Référence erronée</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Paiements{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Paiements</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Chèques</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card py-5">
+                    <div id="formRecu">
+                        <form name="order" method="post" class="d-flex flex-column align-items-center">
+                            <div class="row referenceInput">
+                                <div class="col-lg-12 d-flex justify-content-end align-items-center">
+                                    <label for="referenceCommande">Référence de la commande :</label>
+                                    <input id="referenceCommande" name="referenceCommande" type="text" class="form-control" value="{% if order is defined %}{{ order.reference }}{% endif %}" required/>
+                                </div>
+
+                            </div>
+                            <div class="row referenceInput">
+                                <div class="col-lg-12 d-flex justify-content-center mt-5">
+                                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if order is defined %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body container">
+                            <h1 class="card-title mb-0 pb-0 text-muted">Précommande</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Référence</th>
+                                        <td class="text-right">{{ order.reference }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nom & prénom</th>
+                                        <td class="text-right">{{ order.user.name }} {{ order.user.firstname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>RIB</th>
+                                        <td class="text-right">{{ order.user.rib|slice(0, 5) }} {{ order.user.rib|slice(5, 5) }} {{ order.user.rib|slice(10, 11) }} {{ order.user.rib|slice(21, 2) }}</td>
+                                    </tr>
+                                    {% if order.user.passport != null and order.user.passportExp != null %}
+                                        <tr>
+                                            <th>Passeport</th>
+                                            <td class="text-right">{{ order.user.passport }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date d'expiration</th>
+                                            <td class="text-right">{{ order.user.passportExp }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Pays</th>
+                                            <td class="text-right">{{ order.user.country is not null ? order.user.country.libelle : 'Madagascar' }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if order.user.passport == null and order.user.passportExp == null %}
+                                        <tr>
+                                            <th>CIN</th>
+                                            <td class="text-right">{{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between pt-4">
+                                <form method="post" action="{{ path('admin_payment_check_cancel', {'id': order.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir refuser ce chèque ?');">
+                                    <button class="btn btn-danger me-2">Refuser</button>
+                                </form>
+                                <form method="post" action="{{ path('admin_payment_check_accept', {'id': order.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir accepter ce chèque ?');">
+                                    <button class="btn btn-success">Accepter</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="divToPrint" class="d-none">
+                        {{ render(controller('App\\Controller\\SecurityController::bordereau', {'id': order.id})) }}
+                    </div>
+                    <div id="divToPrintCheque" class="d-none">
+                        {{ render(controller('App\\Controller\\SecurityController::bordereauCheque', {'id': order.id})) }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body container">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h1 class="card-title mb-0 pb-0 text-muted">Chèque</h1>
+                                {% if order.cheque_number is not null and order.cheque_number is not empty %}
+                                    <div>
+                                        <button type="button" class="btn d-block rounded-pill mt-2" onclick="PrintDiv();">
+                                            <span>
+                                                <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                                </svg>
+                                            </span>
+                                            Reçu
+                                        </button>
+                                        <button type="button" class="btn d-block rounded-pill mt-2" onclick="PrintDivChequeBordereau();">
+                                            <span>
+                                                <svg class="bg-dark rounded-circle p-1 bi bi-printer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                                                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                                                </svg>
+                                            </span>
+                                            Bordereau de remise
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <form name="order" class="form-group row d-flex flex-direction-column mb-0 pb-0" method="post">
+                                <div class="d-flex flex-column gap-4 justify-content-center justify-content-lg-end">
+                                    <input type="hidden" name="referenceCommande" value="{{ order.reference }}">
+                                    <div class="d-flex">
+                                        <label for="check_check" class="form-label">Numéro chèque : <span class="text-danger">*</span></label>
+                                        <input type="text" name="check" maxlength="50" id="check_check" class="form-control" value="{{ order.cheque_number }}" required>
+                                    </div>
+                                    <div class="d-flex">
+                                        <label for="check_comment" class="form-label">Commentaires <span class="text-danger">*</span></label>
+                                        <textarea name="comments" id="check_comment" rows="2" class="form-control" required>{{ order.comments }}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-center justify-content-lg-end gap-4">
+                                        <button type="submit" class="btn btn-info text-white">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% block javascripts %}
+                <script>
+                    function PrintDiv() {
+                        const divToPrint = document.getElementById('divToPrint');
+                        const popupWin = window.open('', '_blank');
+                        popupWin.document.open();
+                        popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                        popupWin.document.close();
+                    }
+                    function PrintDivChequeBordereau() {
+                        const divToPrint = document.getElementById('divToPrintCheque');
+                        const popupWin = window.open('', '_blank');
+                        popupWin.document.open();
+                        popupWin.document.write('<html><link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet"><body class="container mt-5" onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                        popupWin.document.close();
+                    }
+                </script>
+            {% endblock %}
+        </div>
+    </section>
+
+{% endblock %}

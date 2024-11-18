@@ -1,0 +1,187 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Prêts personnels exceptionnels{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Rapprochement</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_rapprochement_loan') }}">Prêts personnels exceptionnels</a></li>
+                <li class="breadcrumb-item active">{{ rappro.reference }}</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <div class="d-inline-flex mb-4">
+        <a href="{{ path('admin_rapprochement_loan') }}" class="btn btn-sm btn-secondary me-2">Retour à la liste</a>
+    </div>
+
+    <section class="section">
+
+        <div class="row">
+            <div class="{% if user is not null %}col-md-6{% else %}col-12{% endif %}">
+                <div class="card">
+                    <div class="card-body p-5">
+                        {% if user is null %}
+                            <h4 class="mb-4 text-center text-danger">Précommande introuvable car n° dossier incorrect : précommande à lier manuellement</h4>
+
+                            <div id="formRecu">
+                                <form name="order" method="post" class="d-flex flex-column align-items-center">
+                                    <div class="row referenceInput">
+                                        <div class="col-lg-12 d-flex justify-content-end align-items-center">
+                                            <label for="attribution">Référence :</label>
+                                            <select name="attribution" id="attribution" class="form-control">
+                                                {% for order in orders|filter(order => order.user.role.id == 2 and order.user.paymentMethod == 1) %}
+                                                    <option value="{{ order.id }}">{{ order.reference }}{% if order.user.rib != null %} (RIB: {{ order.user.rib|slice(0, 5) }} {{ order.user.rib|slice(5, 5) }} {{ order.user.rib|slice(10, 11) }} {{ order.user.rib|slice(21, 2) }}){% endif %}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="row referenceInput">
+                                        <div class="col-lg-12 d-flex justify-content-center mt-4">
+                                            <button type="submit" class="btn btn-primary">Lier la précommande</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                        <h1 class="card-title mb-0 pb-0 text-muted">Rapprochement - Virement</h1>
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Référence rapprochement</th>
+                                    <td class="text-right">{{ rappro.reference }}</td>
+                                </tr>
+                                <tr>
+                                    <th>N° dossier</th>
+                                    <td class="text-right">{{ rappro.numDossier }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom & prénom</th>
+                                    <td class="text-right">{{ rappro.nom }} {{ rappro.prenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>RIB</th>
+                                    <td class="text-right">{{ rappro.rib|slice(0, 5) }} {{ rappro.rib|slice(5, 5) }} {{ rappro.rib|slice(10, 11) }} {{ rappro.rib|slice(21, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Montant</th>
+                                    <td class="text-right">{{ rappro.montant|format_number() }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Etat après compensation</th>
+                                    <td class="text-right">{{ rappro.statutChqVir == 'T' ? 'Accepté' : (rappro.statutChqVir == 'N' ? 'Reçu' : 'Rejet') }}</td>
+                                </tr>
+                                {% if rappro.statutChqVir == 'R' %}
+                                    <tr>
+                                        <th>Raison du rejet</th>
+                                        <td class="text-right">{{ rappro.raisonRejet }}</td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th>Date compensation</th>
+                                    <td class="text-right">{{ rappro.dateRappro|date('d/m/Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Etat après rapprochement</th>
+                                    <td class="text-right">{{ (rappro.statutRappro is null or rappro.statutRappro is empty or rappro.statutRappro == 2) ? 'En attente de traitement' : (rappro.statutRappro == 1 ? 'Vérifié' : 'Annulé') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date traitement</th>
+                                    <td class="text-right">{{ rappro.dateTraitement is not null and rappro.dateTraitement is not empty ? rappro.dateTraitement|date('d/m/Y') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% if user is not null %}
+                        <h1 class="card-title mt-4 mb-0 pb-0 text-muted">Précommande{% if rappro.statutRappro is null or rappro.statutRappro is empty or rappro.statutRappro == 2 %} (<a href="{{ path('admin_rapprochement_loan_edit_preorder', {'id': rappro.id}) }}">Modifier / Supprimer</a>){% endif %}</h1>
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Référence</th>
+                                        <td class="text-right">{{ user.reference }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>OV</th>
+                                        <td class="text-right">{{ user.preorder.ov }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Civilité</th>
+                                        <td class="text-right">{{ civility[user.civility] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nom & prénom</th>
+                                        <td class="text-right">{{ user.name }} {{ user.firstname }}</td>
+                                    </tr>
+                                    {% if user.rib != null %}
+                                        <tr>
+                                            <th>RIB</th>
+                                            <td class="text-right">{{ user.rib|slice(0, 5) }} {{ user.rib|slice(5, 5) }} {{ user.rib|slice(10, 11) }} {{ user.rib|slice(21, 2) }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if user.affiliation != null %}
+                                        <tr>
+                                            <th>Numéro d'affiliation</th>
+                                            <td class="text-right">{{ user.affiliation }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if user.iban != null %}
+                                        <tr>
+                                            <th>IBAN - SWIFT</th>
+                                            <td class="text-right">{{ user.iban }} - {{ user.swift }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if user.passport != null and user.passportExp != null %}
+                                        <tr>
+                                            <th>Passeport</th>
+                                            <td class="text-right">{{ user.passport }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date d'expiration</th>
+                                            <td class="text-right">{{ user.passportExp }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Pays</th>
+                                            <td class="text-right">{{ user.country is not null ? user.country.libelle : 'Madagascar' }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if user.passport == null and user.passportExp == null %}
+                                        <tr>
+                                            <th>CIN</th>
+                                            <td class="text-right">{{ user.cin|slice(0, 3) }} {{ user.cin|slice(3, 3) }} {{ user.cin|slice(6, 3) }} {{ user.cin|slice(9, 3) }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        {% if user is not null and (rappro.statutRappro is null or rappro.statutRappro is empty or rappro.statutRappro == 2) %}
+                            <div class="d-flex justify-content-between pt-4">
+                                <form method="post" action="{{ path('admin_rapprochement_loan_cancel', {'id': rappro.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir refuser ce virement ?');">
+                                    <button class="btn btn-danger me-2">Refuser</button>
+                                </form>
+                                <form method="post" action="{{ path('admin_rapprochement_loan_accept', {'id': rappro.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir accepter ce virement ?');">
+                                    <button class="btn btn-success">Accepter</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if user is not null and user.preorder.ov is not null %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <h1 class="card-title my-0 py-0 text-muted">OV</h1>
+                            <embed src="{{ user.preorder.fileOv|replace({'/var/www/html/public' : ''}) }}" width="100%" height="400px"/>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+    </section>
+
+{% endblock %}

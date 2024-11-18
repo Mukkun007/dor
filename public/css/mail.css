@@ -1,0 +1,14 @@
+.container {
+    width: 600px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 3rem !important;
+}
+
+.card {
+    background-color: #5b9ad4;
+    border-radius: 10px;
+    border-color: #5b9ad4;
+    color: #ffffff;
+    font-weight: 600;
+}

@@ -1,0 +1,106 @@
+<div >
+    <div class="d-flex justify-content-center align-items-center"><h5>CONTRAT DE DEPOT</h5></div>
+    <div><span>Entre</span></div>
+    <div><p><strong>Banky Foiben'i Madagasikara</strong>,sise Làlana Revolisiona Sosialista Antaninarenina – ANTANANARIVO, représentée par Monsieur Nirina ANDRIANANJA RATSIMBAZAFY, Directeur en charge des Opérations sur Or, </p></div>
+    <div class="d-flex flex-column align-items-end">
+        <span>Ci-après dénommé <strong>« BFM »</strong></span>
+        <span>D'une part</span>
+
+    </div>
+    <div>
+        <span>Et</span>
+    </div>
+    <div>
+        <span><strong>{{ order.user.name }} {{ order.user.firstname }}</strong>, né le {{ order.user.birthday }}, domicilié à {{ order.user.address }}, titulaire de la Carte Nationale d'Identité n°{{ order.user.cin }}</span>
+    </div>
+    <div class="d-flex flex-column align-items-end">
+        <span>Ci-après dénommé <strong>« l’Acheteur  »</strong></span>
+        <span>D'autre part</span>
+    </div>
+    <div>
+        <span>Conjointement dénommés par « Les Parties » et individuellement par « La Partie »</span>
+    </div>
+    <div class="d-flex justify-content-center align-items-center mt-3">
+        <h6><strong>PREAMBULE</strong></h6>
+    </div>
+    <div>
+        <p>Après validation du dossier d’achat d’une pièce d’or commémorative référencée <strong>{{ order.orStock is not null ? order.orStock.ref : '' }}</strong> émise par BFM, enregistrée au dossier {{ order.reference }} émise par BFM dans le cadre de son cinquantenaire, et sans préjudice de son droit de propriété, l’Acheteur, décide de son plein gré de déposer ladite pièce dans les coffres forts de BFM.</p>
+    </div>
+    <div class="d-flex justify-content-center align-items-center flex-column mb-3">
+        <span><h6><strong>CECI AYANT ETE PREALAMBLEMENT EXPOSE</strong></h6></span>
+        <span><h6><strong>IL A ETE ARRETE ET CONVENU CE QUI SUIT</strong></h6></span>
+    </div>
+    <div class="d-flex flex-column">
+        <strong>Article premier - OBJET</strong>
+        <span>Le présent contrat a pour objet de définir les conditions et modalités relatives au dépôt de la pièce d’or commémorative portant le numéro de série <strong>{{ order.orStock is not null ? order.orStock.ref : '' }}</strong> dans les coffres forts de BFM</span>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 2 – DROIT DE PROPRIETE</strong>
+        <span>L’acheteur a acquis en pleine propriété la pièce mentionnée à l’article précédent.</span>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 3 – OBLIGATIONS DE BFM :</strong>
+        <span>En sa qualité de dépositaire, BFM :</span>
+        <div class="d-flex flex-column ms-5">
+            <span>-	Assure la sécurisation de la pièce</span>
+            <span>-	S’engage à remettre la pièce à la date convenue entre les Parties</span>
+            <span>-	Informer l’Acheteur de tout fait pouvant impacter les conditions de dépôt de la pièce</span>
+            <span>-	Prouver l’opération de dépôt entre l’acheteur et BFM en produisant à la demande de l’acheteur une attestation de dépôt.</span>
+        </div>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 4 – OBLIGATIONS DE L’ACHETEUR :</strong>
+        <span>L’Acheteur est tenu de :</span>
+        <div class="d-flex flex-column ms-5">
+            <span>-	Accomplir les formalités d’identification et de dépôt des spécimens de signatures telles que cité ci-après. L’acheteur produira une copie certifiée de la carte d’identité nationale, un certificat de résidence datant de moins de trois mois ou d’autres éventuelles informations supplémentaires.</span>
+            <span>-	Informer au préalable BFM une (1) semaine au moins avant la date envisagée pour récupérer la pièce</span>
+            <span>-	remplir un bordereau correspondant à la retrait et y apposer systématiquement sa signature. </span>
+            <span>-	Transmettre tout acte authentique/authentifié habilitant un tiers à récupérer la pièce en son nom</span>
+        </div>
+        <span>Donner suite dans un délai raisonnable à toute correspondance adressée par BFM.</span>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 5 – ENTREE EN VIGUEUR</strong>
+        <span>La date d’entrée en vigueur du présent contrat correspond avec celle du dépôt de la pièce dans les coffres forts de BFM, à savoir, le {{ order.dateRdv|date("d/m/Y") }}</span>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 6 – DUREE ET RESILIATION</strong>
+        <span>Le présent contrat de dépôt est valable pour une durée de cinq ans</span>
+        <p>A l’issue du délai susmentionné et à défaut de reconduction, l’Acheteur est tenu de récupérer la pièce dans un délai d’une semaine. </p>
+        <p>Faute par ce dernier de se manifester par procédé laissant trace écrite, et en cas de recherches infructueuses, BFM est habilitée à recueillir une Ordonnance sur requête l’autorisant à consigner la somme correspondante au prix d’achat de la pièce et à reprendre le droit de propriété sur la pièce concernée. </p>
+        <p>Le retrait de la pièce d’or entraine de facto la résiliation du présent contrat de dépôt.</p>
+        <p>En cas de décès de l’acheteur, le compte de dépôt sera clôturé par BFM de plein droit et sans délais.Les héritiers ne peuvent bénéficier du prix d’achat de la pièce  qu’après avoir produit auprès de BFM un acte notarié.</p>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 7 - AVENANT</strong>
+        <span>Le présent contrat peut faire l’objet d’avenant arrêté d’un commun-accord par les Parties.</span>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 8 - COMMUNICATION</strong>
+        <span>Pour être valables, toutes les communications doivent être adressées aux adresses suivantes :</span>
+        <div class="d-flex flex-column ms-5">
+            <span>-	Pour BFM : BP550 Antananarivo 101 - Email : banky-foibe@bfm.mg</span>
+            <span>-	Pour l’Acheteur {{ order.user.name }} {{ order.user.firstname }} : {{ order.user.address }} – Email {{ order.user.email }}</span>
+        </div>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 9 - SIGNATURES</strong>
+        <p>Les Parties reconnaissent l’entière validité des signatures manuscrites et électroniques apposées sur le présent Contrat et sur tout acte et correspondances qui en découleraient.</p>
+    </div>
+    <div class="d-flex flex-column mt-3">
+        <strong>Article 10 - LITIGES</strong>
+        <p>Tout litige né de l’interprétation et/ou exécution du présent contrat fera l’objet d’un règlement à l’amiable. A défaut d’entente dans un délai de quinze (15) jours ouvrables à l’issue de la survenance du différend, celui-ci sera soumis par la Partie la plus diligente au Tribunal d’Antananarivo</p>
+    </div>
+    <div class="d-flex flex-column align-items-end mb-3">
+        <span>Fait à Antananarivo en deux (2) exemplaires originaux</span>
+        <span>Le {{ order.dateRdv|date("d/m/Y") }}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+        <span>L’Acheteur</span>
+        <span>Pour BFM</span>
+    </div>
+    <div class="d-flex justify-content-between mt-5">
+        <span>{{ order.user.name }} {{ order.user.firstname }}</span>
+        <span>RATSIMBAZAFY ANDRIANANJA Nirina</span>
+    </div>
+</div>

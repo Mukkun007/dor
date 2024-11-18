@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edition paramètre{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Paramètres</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin_setting_index') }}">Paramètres</a></li>
+                <li class="breadcrumb-item active">Autres</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nationalité</h5>
+
+                        <!-- General Form Elements -->
+                        <form name="resource" class="row g-3" method="post">
+                            {{ form_row(form._token) }}
+                            <div class="col-lg-6">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" id="flexSwitchCheckDefault" type="checkbox" name="setting[value]" {{ (valeur is not null and valeur.value) == 1 ? 'checked' : ''}}/>
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Activation du champ nationalité</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-sm btn-primary" type="submit">Valider</button>
+                            </div>
+                        </form><!-- End General Form Elements -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

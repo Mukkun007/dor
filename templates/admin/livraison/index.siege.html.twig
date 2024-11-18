@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Pr&eacutecommandes{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Livraison</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Récupération Siège</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <div class="d-inline-flex mb-4">
+
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable-export">
+                            <thead>
+                                <tr>
+                                    <th class="export">#</th>
+                                    <th>Nom<br/>Prénoms</th>
+                                    <th class="export">Nom</th>
+                                    <th class="export">Prénoms</th>
+                                    <th class="export">CIN / Passeport</th>
+                                    <th class="export">Lieu de récupération</th>
+                                    <th class="export searchPane">Rendez-vous de récupération</th>
+                                    <th class="export searchPane">Plage horaire</th>
+                                    <th class="export searchPane">Statut</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    {% if (order.choiceLivraison == 2 or order.choiceLivraison == 3) and order.choiceMeeting == 1 and order.flagStatus > 3 and order.flagStatus != 99 %}
+                                        <tr>
+                                            <td>{{ order.reference }}</td>
+                                            <td>{{ order.user.name }}<br/>{{ order.user.firstname }}</td>
+                                            <td>{{ order.user.name }}</td>
+                                            <td>{{ order.user.firstname }}</td>
+                                            {% if order.user.cin != null %}
+                                                <td>{{ order.user.cin|slice(0, 3) }} {{ order.user.cin|slice(3, 3) }} {{ order.user.cin|slice(6, 3) }} {{ order.user.cin|slice(9, 3) }}</td>
+                                            {% elseif order.user.passport != null %}
+                                                <td>{{ order.user.passport }}</td>
+                                            {% endif %}
+                                            <td>Siège</td>
+                                            <td>{{ order.dateCalendar }}</td>
+                                            <td>{{ order.typeCalendar == 'AM' ? '09h00 à 11h30' : (order.typeCalendar == 'PM' ? '14h00 à 16h30' : '') }}</td>
+                                            <td>{{ status[order.flagStatus] }}</td>
+                                            <td class="text-right">
+                                                <a href="{{ path('admin_livraison_siege', {'id': order.id}) }}" class="btn btn-sm btn-success">Détails</a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

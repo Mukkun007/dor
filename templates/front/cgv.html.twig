@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce de monnaie en or commémorative de 50 Ariary - Conditions de ventes</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+
+    </head>
+
+    <body class="d-flex flex-column h-100" style="background-color: #004776;">
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main p-5">
+
+{#            <div id="test" class="row">#}
+{#                <div class="col-12">#}
+{#                    <h1 class="text-center m-auto p-2">VERSION TEST</h1>#}
+{#                </div>#}
+{#            </div>#}
+
+            <div class="container">
+
+                <div class="row mb-5">
+                    <div class="col-12{# mt-5#}">
+                        <div class="header-cgv">
+                            <div class="condition-wrapper-logo">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/Face.png') }}" alt="BFM" class="condition-logo"></a>
+                            </div>
+                            <div class="wrapper-title m-auto">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">Pièce de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2 class="text-gold formulaire-inscription">Conditions de vente des pièces de monnaies en or commémorative de 50 ariary</h2>
+                    </div>
+                </div>
+                <div class="row mb-3 page-cgv">
+                    <div class="col-12 text-grey condition-vente">
+                        {{ setting_value|replace({"{{ price }}": setting_price, "\\": "", "Mb-" : "mb-", "line-height: 1rem;" : "", "line-height: 1rem !important;" : "", "font-size: 1.5rem;" : "", "font-size: 12pt;" : "", "font-family: 'Times New Roman', serif;" : ""})|raw }}
+                    </div>
+                </div>
+       
+            </div>
+            
+        </main><!-- End main -->
+        {{ include('front/_footer.html.twig') }}
+
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/platform.min.js') }}"></script>
+        <script>
+            let isAndroid = platform.os.family === 'Android';
+            let isIOS = platform.os.family === 'iOS';
+
+            //type date en type text en android
+            if (!isAndroid && !isIOS) {
+                document.addEventListener('DOMContentLoaded', function () {
+                    const conditionVente = document.querySelectorAll('.condition-vente .modalAlert div:nth-child(2) p');
+                    conditionVente.forEach(x => {
+                        x.style.fontSize = '1.5rem';
+                    });
+                });
+            }
+        </script>
+    </body>
+
+</html>

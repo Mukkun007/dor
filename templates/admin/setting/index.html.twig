@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Paramètres{% endblock %}
+
+{% block body %}
+
+    <div class="pagetitle">
+        <h1>Paramètres</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Paramètres</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card pt-5">
+                    <div class="card-body">
+                        <!-- Default Table -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Clé</th>
+                                    <th>Valeur</th>
+                                    <th>Date d’ajout</th>
+                                    <th>Date de mise à jour</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for setting in settings %}
+                                    {% if setting.name not in ['NATIONALITY', 'CAMPAIGN_END_DATE', 'FAQ', 'CGV'] %}
+                                        <tr>
+                                            <td>{{ setting.name }}</td>
+                                            <td>{{ setting.value }}</td>
+                                            <td>{{ setting.createdAt|date('Y-m-d') }}</td>
+                                            <td>{{ setting.updatedAt is not null ? setting.updatedAt|date('Y-m-d') : '' }}</td>
+
+                                            {% if setting.name not in ['NATIONALITY', 'CAMPAIGN_END_DATE', 'FAQ', 'CGV', 'STOCK_ACTUEL', 'STOCK_PREORDER', 'STOCK_VENDU'] %}
+                                            <td class="text-right">
+                                                <a href="{{ path('admin_setting_edit', {'id': setting.id}) }}" class="btn btn-sm btn-secondary">Editer</a>
+                                            </td>
+                                            {% else %}
+                                            <td></td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Default Table Example -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

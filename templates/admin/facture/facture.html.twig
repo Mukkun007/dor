@@ -1,0 +1,70 @@
+<div class="d-flex align-items-end mb-5 p-5" style="background:#418ab3;">
+    <div class="login-wrapper-logo" style="background: white;">
+        <a href="{{ path('app_index') }}"><img src="{{ asset('img/BFM50LOGOFINAL-01.png') }}" alt="BFM" class="img-fluid" style="width: 200px"></a>
+    </div>
+    <div style="color:white; width:100%;" class="text-center"><h1 class="text-center my-5">FACTURE</h1></div>
+</div>
+<div class="mb-5">&nbsp;</div>
+<div class="d-flex justify-content-between mb-5">
+    <div>
+        <span><b>Client: {{ order.user.name }} {{ order.user.firstname }}</b></span><br />
+        <span>Adresse: {{ order.user.address }}</span><br />
+        <span>Téléphone: {{ order.user.phone }}</span><br />
+        <span>Email: {{ order.user.email }}</span>
+    </div>
+    <div>
+        <span>Date: {{ order.dateRdv|date("d/m/Y") }}</span><br />
+        <span>N° Pièce: {{ order.orStock is not null ? order.orStock.ref : '' }}</span><br />
+        <span>N° Dossier: {{ order.user.reference }}</span><br />
+        <span>Date de livraison: {{ order.dateRdv|date("d/m/Y") }}</span>
+    </div>
+</div>
+<div class="mb-5">&nbsp;</div>
+<div style="width:100%; background:red; height: 5px;" class="mb-2"></div>
+<div class="d-flex gap-5 justify-content-between mb-5">
+    <div style="width:100%;">
+        <div style="color:black;" class="d-flex justify-content-between">
+            <div>
+                <span><b>Description</b></span></br>
+                <span>Pièce de monnaie 50 Ariary</span></br>
+                <span>Commémorative 1 Oz</span>
+            </div>
+            <div>
+                <span><b>Nombre(s)</b></span></br>
+                <span>1</span>
+            </div>
+            <div>
+                <span><b>Prix unitaire</b></span></br>
+                <span>12,000,000</span>
+            </div>
+            <div>
+                <span><b>Unité</b></span></br>
+                <span>Ariary</span>
+            </div>
+            <div>
+                <span><b>Total</b></span></br>
+                <span>12,000,000</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mb-5">&nbsp;</div>
+<div class="d-flex gap-5 justify-content-between mb-5">
+    <div style="width:100%;"></div>
+    <div style="width:100%;" class="p-1">
+        <h6 class="text-end ps-3"><span class="me-5"><b>TOTAL</b></span>12,000,000</h6>
+    </div>
+</div>
+<div class="d-flex gap-5 justify-content-between mb-3">
+    <div style="width:100%;">
+        <span><b>BANKY FOIBEN'I MADAGASIKARA</b></span></br>
+        <span>Antananarivo 101-Madagasikara</span></br>
+        <span>BFM Antaninarenina</span>
+    </div>
+    <div style="width:100%;">
+        <span>Lieu: Lalana Revolisiona Sosialista Malagasy Antaninarenina</span></br>
+        <span>Téléphone :  (261) 20 22 217 51</span></br>
+        <span>E-mail : banky-foibe@bfm.mg</span>
+    </div>
+</div>
+<div style="width:100%; background:#418ab3; height: 30px;" class="mb-5"></div>

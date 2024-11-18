@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Ajouter Or{% endblock %}
+
+{% block body %}
+    <section class="section">
+      <div class="row">
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Importer fichier</h5>
+
+              <!-- Floating Labels Form -->
+              <form method="post" enctype="multipart/form-data">
+                {{ form_row(form._token) }}
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input type="file" title="Choose a video please" class="form-control" name="excel_file" accept=".xlsx, .xls">
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

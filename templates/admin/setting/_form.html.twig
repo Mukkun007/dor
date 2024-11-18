@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Informations générales</h5>
+
+                <!-- General Form Elements -->
+                <form name="resource" class="row g-3" method="post">
+                    {{ form_row(form._token) }}
+                    <div class="col-lg-6">
+                        <div class="form-floating">
+                            <input type="text" id="setting_name" placeholder="Code" name="setting[name]" class="form-control" value="{{ form.vars.value.name }}" required>
+                            <label for="setting_name">Code</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-floating">
+                            <input type="text" id="setting_value" placeholder="Valeur" name="setting[value]" class="form-control" value="{{ form.vars.value.value }}" required>
+                            <label for="setting_value">Designation</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-sm btn-primary" type="submit">Valider</button>
+                    </div>
+                </form><!-- End General Form Elements -->
+
+            </div>
+        </div>
+
+    </div>
+</div>

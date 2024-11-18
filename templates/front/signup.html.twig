@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Pièce de monnaie en or commémorative de 50 Ariary - Précommander</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="icon">
+        <link href="{{ asset('img/BFM50LOGOFINAL-01.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
+
+        <style>
+            .modal-content p {
+                font-size: 1.25rem !important;          }
+        </style>
+
+    </head>
+
+    <body class="d-flex flex-column h-100" style="background-color: #004776;">
+
+        <div id="spinner" class="spinner bg-white d-none">
+            <div class="m-auto">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="main" class="main p-5">
+
+{#            <div id="test" class="row">#}
+{#                <div class="col-12">#}
+{#                    <h1 class="text-center m-auto p-2">VERSION TEST</h1>#}
+{#                </div>#}
+{#            </div>#}
+
+            <div class="container">
+
+                <div class="row mb-5">
+                    <div class="col-12{# mt-5#}">
+                        <div class="header-signup">
+                            <div class="signup-wrapper-logo">
+                                <a href="{{ path('app_index') }}"><img src="{{ asset('img/Face.png') }}" alt="BFM" class="signup-logo"></a>
+                            </div>
+
+                            <div class="wrapper-title m-auto">
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">Pièce de monnaie en or commémorative de 50 Ariary</h3>
+                                    </div>
+                                </div>
+                                <div class="row my-auto">
+                                    <div class="col-12 text-gold text-uppercase">
+                                        <h3 class="title_signup">banky foiben'i madagasikara</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {{ include('front/_user.form.html.twig') }}
+
+                
+            </div>
+
+        </main><!-- End main -->
+        {{ include('front/_footer.html.twig') }}
+        <!-- Vendor JS Files -->
+        <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+        <script src="{{ asset('js/additional-methods.min.js') }}"></script>
+        <script src="{{ asset('js/localization/messages_fr.min.js') }}"></script>
+        <script src="{{ asset('js/bankyInfo.js') }}"></script>
+        <script src="{{ asset('js/alert.js') }}"></script>
+        <script src="{{ asset('js/platform.min.js') }}"></script>
+        <script src="{{ asset('js/signup.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+                {% if _error is null and cgv is same as(true) %}
+                    {% set modalContent = setting_value|replace({"{{ price }}": setting_price, "\\": "", "Mb-" : "mb-"})|e('js') %}
+                    modalAlert('{{ modalContent|replace({"\\n" : ""}) }}');
+                    // modalAlert('<div class="modalAlert"><div style="background-color: #9f662e; padding: 24px; border-top-left-radius: 35px; border-top-right-radius: 35px; padding-inline: 56px;"><h5 style="color: white;">CONDITIONS DE VENTE</h5></div><div class="p-5 pb-0" style="text-align: start !important;"><p class="mb-4" style="font-size: 16px !important;">En application de l\'article 2 alin&eacute;a 2 du D&eacute;cret n&deg;2023-560 du 17 mai 2023 consacrant l\'&eacute;mission de pi&egrave;ces de monnaie en or comm&eacute;morative de 50 Ariary, Banky Foiben\'i Madagasikara (BFM) d&eacute;finit les modalit&eacute;s pratiques de mise en vente desdites pi&egrave;ces.</p><p class="mb-4" style="font-size: 16px !important;">Les pr&eacute;sentes Conditions de vente s\'appliquent sans restriction ni r&eacute;serves aux personnes physiques d&eacute;sirant effectuer une acquisition.</p><p class="mb-5" style="font-size: 16px !important;">Afin de garantir la transparence, la gestion des propositions d\'acquisition re&ccedil;ues du public sera effectu&eacute;e de mani&egrave;re automatis&eacute;e et les inscriptions s\'effectueront exclusivement en ligne sur <a class="text-grey" href="https://www.banky-foibe.mg/" target="_blank" rel="noopener">www.banky-foibe.mg</a> dans le respect des dispositions l&eacute;gales relatives &agrave; la protection des donn&eacute;es &agrave; caract&egrave;re personnel.</p><p class="mb-1 text-center" style="font-size: 16px !important;"><strong class="text-dark-gold">Article premier - OBJET</strong></p><p class="mb-5" style="font-size: 16px !important;">Les pr&eacute;sentes Conditions d&eacute;finissent les r&egrave;gles applicables &agrave; la vente des pi&egrave;ces de monnaie en or comm&eacute;moratives de 50 Ariary &eacute;mises par BFM dans le cadre de son cinquantenaire.</p><p class="mb-1 text-center" style="font-size: 16px !important;"><strong class="text-dark-gold">Article 2 - PRINCIPES</strong></p><p class="mb-1 text-start" style="font-size: 16px !important;"><em class="text-white">2.1. Principes g&eacute;n&eacute;raux</em></p><p class="mb-1" style="font-size: 16px !important;">L\'acquisition des pi&egrave;ces d\'or suit les principes &eacute;num&eacute;r&eacute;s ci-apr&egrave;s :</p><p class="mb-1" style="font-size: 16px !important;">- Une Carte Nationale d\'Identit&eacute; (CNI) pour une pi&egrave;ce de monnaie en or.</p><p class="mb-4" style="font-size: 16px !important;">Outre les crit&egrave;res susmentionn&eacute;s, BFM se r&eacute;serve le droit de rejeter une inscription qui pr&eacute;senterait des incoh&eacute;rences et/ou ne r&eacute;pondrait pas aux exigences l&eacute;gales et r&eacute;glementaires en vigueur. BFM n\'est pas tenue de motiver sa d&eacute;cision ni de donner suite &agrave; une &eacute;ventuelle contestation.</p><p class="mb-4" style="font-size: 16px !important;">L\'ordre de traitement des offres sera celui de la date et de l\'heure de l\'inscription.</p><p class="mb-1 text-start" style="font-size: 16px !important;"><em class="text-white">2.2. Crit&egrave;res d\'&eacute;ligibilit&eacute;</em></p><p class="mb-1" style="font-size: 16px !important;">Sont &eacute;ligibles les personnes physiques r&eacute;pondant aux crit&egrave;res suivants :</p><p class="mb-1" style="font-size: 16px !important;">- Avoir lu et accept&eacute; les pr&eacute;sentes conditions de vente ;</p><p class="mb-1" style="font-size: 16px !important;">- Etre d&eacute;tenteur d\'une Carte Nationale d\'Identit&eacute; Malagasy valide ;</p><p class="mb-1" style="font-size: 16px !important;">- Etre &acirc;g&eacute;(e) de 21 ans et plus &agrave; la date de l\'inscription &agrave; la demande d\'achat et disposant de toutes ses capacit&eacute;s juridiques ;</p><p class="mb-1" style="font-size: 16px !important;">- Etre titulaire d\'un compte courant ouvert aupr&egrave;s d\'une banque et &agrave; travers lequel l\'op&eacute;ration d\'achat sera men&eacute;e ;</p><p class="mb-1" style="font-size: 16px !important;">- Etre le tireur du ch&egrave;que &eacute;mis pour l\'achat de la pi&egrave;ce d\'or, le cas &eacute;ch&eacute;ant ;</p><p class="mb-5" style="font-size: 16px !important;">- Avoir correctement rempli le formulaire d\'inscription et fourni les documents demand&eacute;s en pi&egrave;ces jointes.</p><div class="cgv-confirm-block" style="display: flex; align-items: center;"><input class="cgv-confirm me-2" style="margin-bottom: 10px;" type="checkbox" onclick="cgvConfirm()"><h6 style="font-size: 14px !important;">J\'ai lu et j\'accepte les conditions de vente des pi&egrave;ces de monnaie en or comm&eacute;morative de 50 Ariary</h6></div></div></div>');
+                {% endif %}
+
+                {% if _error is not null %}
+                    modalAlert('{{ _error }}', 'error');
+                {% endif %}
+            });
+        </script>
+
+    </body>
+    
+</html>
